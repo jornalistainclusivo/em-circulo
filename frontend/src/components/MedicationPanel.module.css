@@ -1,0 +1,204 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.panel h2 {
+  font-size: var(--font-size-2xl);
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+
+.emptyState {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.cardLowStock {
+  border-color: var(--color-danger);
+  background-color: var(--color-danger-light);
+}
+
+.cardLowStock .stockLabel,
+.cardLowStock .stockCount {
+  color: var(--color-danger);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.name {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.details {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.stock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  background-color: var(--color-surface-sunken);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+}
+
+.cardLowStock .stock {
+  background-color: var(--color-surface);
+}
+
+.stockLabel {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.05em;
+}
+
+.stockCount {
+  font-size: var(--font-size-lg);
+  color: var(--color-primary);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.logButton {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.logButton:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.logButton:active {
+  transform: scale(0.97);
+}
+
+.cardLowStock .logButton {
+  background-color: var(--color-danger);
+}
+
+.cardLowStock .logButton:hover {
+  background-color: #7f1d1d; /* Tailwind Red 900 equivalent */
+}
+
+.confirmPanel {
+  background-color: var(--color-surface-sunken);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  animation: slideDown var(--transition-fast) forwards;
+  border: 1px solid var(--color-border);
+}
+
+.confirmPanel p {
+  margin: 0;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+.confirmActions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: flex-end;
+}
+
+.cancelButton {
+  background: transparent;
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.cancelButton:hover:not(:disabled) {
+  background-color: var(--color-surface);
+}
+
+.submitButton {
+  background-color: var(--color-success);
+  color: var(--color-surface);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: #14532d; /* Tailwind Green 900 equivalent */
+}
+
+.cancelButton:disabled,
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

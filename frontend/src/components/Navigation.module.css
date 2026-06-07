@@ -1,0 +1,59 @@
+.header {
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+}
+
+.headerTop {
+  padding: var(--space-4) var(--space-6) var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--color-primary);
+}
+
+.brandName {
+  font-size: var(--font-size-lg);
+  color: var(--color-primary);
+}
+
+.slogan {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+
+.nav {
+  display: flex;
+  gap: var(--space-6);
+  padding: 0 var(--space-6);
+}
+
+.navLink {
+  padding: var(--space-3) 0;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  border-bottom: 2px solid transparent;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.navLink:hover {
+  color: var(--color-primary);
+}
+
+.navLink[aria-current="page"] {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+  border-bottom-color: var(--color-primary);
+}
