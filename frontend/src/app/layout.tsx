@@ -1,18 +1,19 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { SkipLink } from "@/components/SkipLink";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Orquestração do Cuidado",
+  title: "Cuida Comigo",
   description:
-    "Plataforma de gestão compartilhada para descentralizar a carga cognitiva e operacional de cuidadores informais.",
+    "Ninguém precisa cuidar sozinho. Plataforma de gestão compartilhada para cuidadores informais.",
   manifest: "/manifest.json",
-  applicationName: "Orquestração do Cuidado",
+  applicationName: "Cuida Comigo",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Cuidado",
+    title: "Cuida Comigo",
   },
 };
 
@@ -49,12 +50,16 @@ export default function RootLayout({
       <body>
         <SkipLink />
 
-        <header>
-          <nav aria-label="Navegação principal">
-            <Link href="/" aria-current="page">
-              <strong>Cuidado</strong>
+        <header style={{ padding: "var(--space-4) var(--space-6)", borderBottom: "1px solid var(--color-border)", display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+          <nav aria-label="Navegação principal" style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
+            <Link href="/" aria-current="page" style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", textDecoration: "none", color: "var(--color-primary)" }}>
+              <Image src="/logo.png" alt="Logo Cuida Comigo" width={32} height={32} style={{ height: "32px", width: "auto" }} />
+              <strong style={{ fontSize: "var(--font-size-lg)" }}>Cuida Comigo</strong>
             </Link>
           </nav>
+          <p style={{ margin: 0, fontSize: "var(--font-size-sm)", color: "var(--color-text-secondary)", fontWeight: "var(--font-weight-medium)" }}>
+            Ninguém precisa cuidar sozinho
+          </p>
         </header>
 
         <main id="main-content" tabIndex={-1}>
@@ -64,7 +69,7 @@ export default function RootLayout({
         <footer>
           <p>
             <small>
-              © {new Date().getFullYear()} Orquestração do Cuidado — JINC Apps
+              © {new Date().getFullYear()} Cuida Comigo — JINC Apps
             </small>
           </p>
         </footer>
