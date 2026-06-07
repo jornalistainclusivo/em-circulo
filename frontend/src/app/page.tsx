@@ -14,6 +14,7 @@ import type {
   Task,
   ISODateString,
 } from "@/types";
+import { claimTaskAction, completeTaskAction } from "./actions";
 import styles from "./page.module.css";
 
 /* ── Demo Data (structural validation only) ──────────────────── */
@@ -91,7 +92,27 @@ const DEMO_TASKS: Task[] = [
   },
 ];
 
-export default function DashboardPage() {
+const userNamesMap: Record<string, string> = {
+  "d4e5f6a7-b8c9-0123-defa-234567890123": "João Silva", // Admin
+  "f6a7b8c9-d0e1-2345-fabc-456789012345": "Carlos Souza", // Apoio
+};
+
+async function fetchTasks(): Promise<Task[]> {
+  try {
+    const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:8000";
+    const res = await fetch(`${API_BASE_URL}/tasks?care_group_id=${DEMO_GROUP.id}`, { cache: "no-store" });
+    if (res.ok) {
+      return (await res.json()) as Task[];
+    }
+  } catch (error) {
+    console.warn("FastAPI indisponível ou rota não encontrada. Usando DEMO_TASKS fallback:", error);
+  }
+  return DEMO_TASKS;
+}
+
+export default async function DashboardPage() {
+  const tasks = await fetchTasks();
+
   return (
     <article className={styles.dashboard}>
       <header className={styles.pageHeader}>
@@ -105,11 +126,14 @@ export default function DashboardPage() {
         group={DEMO_GROUP}
         recipient={DEMO_RECIPIENT}
         members={DEMO_MEMBERS}
+        userNames={userNamesMap}
       />
 
       <TaskPanel
-        tasks={DEMO_TASKS}
+        tasks={tasks}
         currentMemberId={DEMO_MEMBERS[0].id}
+        onClaimTask={claimTaskAction}
+        onCompleteTask={completeTaskAction}
       />
     </article>
   );
