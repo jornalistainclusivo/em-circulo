@@ -1,4 +1,6 @@
 ---
+name: tech_spec_orquestracao
+description: Especificação Técnica — Orquestração do Cuidado
 jinc-spec-version: 1.0.0
 project-name: Orquestração do Cuidado
 feature-name: Core Entities & Critical Flows MVP

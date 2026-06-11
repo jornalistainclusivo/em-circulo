@@ -1,4 +1,6 @@
 ---
+name: prd_orquestracao
+description: Documento de Requisitos de Produto (PRD) do Cuida Comigo
 jinc-spec-version: "1.0"
 project-name: "Cuida Comigo"
 status: "active"
