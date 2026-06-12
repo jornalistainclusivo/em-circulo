@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.ext.asyncio import AsyncSession
 import uuid
 
@@ -36,8 +36,26 @@ async def get_protocols(recipient_id: uuid.UUID, session: AsyncSession = Depends
     protocols = result.scalars().all()
     return protocols
 
+async def process_replenish_task(care_recipient_id: uuid.UUID, medication_name: str, stock_count: int):
+    from app.database import engine
+    from sqlalchemy.ext.asyncio import AsyncSession
+    from sqlalchemy.orm import sessionmaker
+    async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+    async with async_session() as db_session:
+        care_recipient = await db_session.get(CareRecipient, care_recipient_id)
+        if care_recipient:
+            replenish_task = Task(
+                care_group_id=care_recipient.care_group_id,
+                title=f"Repor medicamento: {medication_name}",
+                description=f"O estoque do medicamento atingiu o limite crítico. Restam apenas {stock_count} unidades.",
+                due_date=utc_now(),
+                status=TaskStatus.PENDING
+            )
+            db_session.add(replenish_task)
+            await db_session.commit()
+
 @router.post("/api/v1/protocols/{protocol_id}/logs", response_model=MedicationLogResponse)
-async def log_medication(protocol_id: uuid.UUID, payload: MedicationLogCreate, session: AsyncSession = Depends(get_session)):
+async def log_medication(protocol_id: uuid.UUID, payload: MedicationLogCreate, background_tasks: BackgroundTasks, session: AsyncSession = Depends(get_session)):
     protocol = await session.get(MedicationProtocol, protocol_id)
     if not protocol:
         raise HTTPException(status_code=404, detail="Protocol not found")
@@ -54,19 +72,13 @@ async def log_medication(protocol_id: uuid.UUID, payload: MedicationLogCreate, s
         
     if protocol.stock_count <= protocol.safety_threshold:
         stock_alert = True
-        
-        # Explicitly fetch care recipient to get care_group_id
-        care_recipient = await session.get(CareRecipient, protocol.care_recipient_id)
-        
-        # Create replenish task
-        replenish_task = Task(
-            care_group_id=care_recipient.care_group_id,
-            title=f"Repor medicamento: {protocol.medication_name}",
-            description=f"O estoque do medicamento atingiu o limite crítico. Restam apenas {protocol.stock_count} unidades.",
-            due_date=utc_now(), # Requires import or use Python datetime
-            status=TaskStatus.PENDING
+        # Injeta task no Background para não bloquear o Event Loop
+        background_tasks.add_task(
+            process_replenish_task, 
+            protocol.care_recipient_id, 
+            protocol.medication_name, 
+            protocol.stock_count
         )
-        session.add(replenish_task)
 
     session.add(log)
     session.add(protocol)

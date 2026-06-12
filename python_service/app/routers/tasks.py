@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 import uuid
@@ -30,8 +30,12 @@ async def claim_task(task_id: uuid.UUID, request: TaskClaimRequest, session: Asy
     
     return task
 
+async def notify_group_task_completed(task_id: uuid.UUID):
+    import logging
+    logging.info(f"Notification Triggered: Task {task_id} foi concluída pelo membro responsável.")
+
 @router.patch("/{task_id}/complete", response_model=TaskResponse)
-async def complete_task(task_id: uuid.UUID, session: AsyncSession = Depends(get_session)):
+async def complete_task(task_id: uuid.UUID, background_tasks: BackgroundTasks, session: AsyncSession = Depends(get_session)):
     task = await session.get(Task, task_id)
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
@@ -44,5 +48,8 @@ async def complete_task(task_id: uuid.UUID, session: AsyncSession = Depends(get_
     session.add(task)
     await session.commit()
     await session.refresh(task)
+    
+    # Injeta side effect de notificação no Background
+    background_tasks.add_task(notify_group_task_completed, task.id)
     
     return task
