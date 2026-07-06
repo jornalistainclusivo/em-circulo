@@ -1,9 +1,45 @@
 import uuid
 from datetime import datetime
 from typing import Optional, Any
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, EmailStr, ConfigDict
 
 from app.models import TaskStatus
+
+
+# ---------------------------------------------------------------------------
+# Auth Schemas — PRD v0.3
+# ---------------------------------------------------------------------------
+
+class UserCreate(BaseModel):
+    """Payload for POST /api/v1/auth/register."""
+    email: EmailStr
+    password: str
+    full_name: str
+
+
+class UserResponse(BaseModel):
+    """Safe user representation — hashed_password is never included."""
+    model_config = ConfigDict(from_attributes=True)
+
+    id: uuid.UUID
+    email: str
+    full_name: str
+    is_active: bool
+    created_at: datetime
+
+
+class Token(BaseModel):
+    """JWT token response from POST /api/v1/auth/login."""
+    access_token: str
+    token_type: str = "bearer"
+
+
+class TokenData(BaseModel):
+    """Decoded claims extracted from a JWT payload."""
+    user_id: Optional[str] = None
+
+
+
 
 class CareGroupCreate(BaseModel):
     name: str
