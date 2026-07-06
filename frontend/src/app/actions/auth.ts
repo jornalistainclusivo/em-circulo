@@ -173,3 +173,106 @@ export async function logoutAction() {
   cookieStore.delete("cc_access_token");
   redirect("/login");
 }
+
+/**
+ * Server Action: Create Care Group (Onboarding Step 1)
+ */
+export async function createCareGroupAction(
+  prevState: (FormState & { group_id?: string }) | null,
+  formData: FormData
+): Promise<FormState & { group_id?: string }> {
+  const name = formData.get("name") as string;
+  if (!name) {
+    return { success: false, error: "Nome do Círculo de Cuidado é obrigatório." };
+  }
+
+  const cookieStore = await cookies();
+  const token = cookieStore.get("cc_access_token")?.value;
+
+  if (!token) {
+    return { success: false, error: "Sessão expirada. Faça login novamente." };
+  }
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/care-groups`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({ name }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      return { success: false, error: data.detail || "Falha ao criar círculo de cuidado." };
+    }
+
+    return { success: true, group_id: data.id };
+  } catch (error) {
+    console.error("createCareGroupAction error:", error);
+    return { success: false, error: "Erro de conexão com o servidor." };
+  }
+}
+
+/**
+ * Server Action: Create Care Recipient (Onboarding Step 2)
+ */
+export async function createCareRecipientAction(
+  prevState: FormState | null,
+  formData: FormData
+): Promise<FormState> {
+  const careGroupId = formData.get("care_group_id") as string;
+  const name = formData.get("name") as string;
+  const bloodType = formData.get("blood_type") as string;
+  const allergiesRaw = formData.get("allergies") as string;
+  const contactName = formData.get("contact_name") as string;
+  const contactPhone = formData.get("contact_phone") as string;
+
+  if (!careGroupId || !name) {
+    return { success: false, error: "Dados inválidos ou incompletos." };
+  }
+
+  const cookieStore = await cookies();
+  const token = cookieStore.get("cc_access_token")?.value;
+
+  if (!token) {
+    return { success: false, error: "Sessão expirada. Faça login novamente." };
+  }
+
+  const allergies = allergiesRaw
+    ? allergiesRaw.split(",").map((s) => s.trim()).filter(Boolean)
+    : [];
+
+  const emergencyContacts = contactName && contactPhone
+    ? [{ name: contactName, phone: contactPhone }]
+    : [];
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/care-recipients`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        care_group_id: careGroupId,
+        name,
+        blood_type: bloodType || null,
+        allergies,
+        emergency_contacts: emergencyContacts
+      }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      return { success: false, error: data.detail || "Falha ao cadastrar paciente." };
+    }
+
+  } catch (error) {
+    console.error("createCareRecipientAction error:", error);
+    return { success: false, error: "Erro de conexão com o servidor." };
+  }
+
+  redirect("/");
+}

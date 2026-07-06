@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Protected routes
-  const isProtectedRoute = pathname === "/" || pathname.startsWith("/medicamentos");
+  const isProtectedRoute = pathname === "/" || pathname.startsWith("/medicamentos") || pathname === "/onboarding";
 
   // Auth routes
   const isAuthRoute = pathname === "/login";
@@ -41,5 +41,6 @@ export const config = {
     "/",
     "/medicamentos/:path*",
     "/login",
+    "/onboarding",
   ],
 };

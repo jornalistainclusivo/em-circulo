@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from typing import Optional, Any
+from typing import Optional, Any, List
 from pydantic import BaseModel, EmailStr, ConfigDict
 
 from app.models import TaskStatus
@@ -39,15 +39,37 @@ class TokenData(BaseModel):
     user_id: Optional[str] = None
 
 
-
+# ---------------------------------------------------------------------------
+# Onboarding Schemas — PRD v0.4
+# ---------------------------------------------------------------------------
 
 class CareGroupCreate(BaseModel):
     name: str
-    recipient_name: str
 
 class CareGroupResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
     id: uuid.UUID
     name: str
+    created_at: datetime
+    updated_at: datetime
+
+class CareRecipientCreate(BaseModel):
+    care_group_id: uuid.UUID
+    name: str
+    blood_type: Optional[str] = None
+    allergies: List[str] = []
+    emergency_contacts: List[dict[str, Any]] = []
+
+class CareRecipientResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: uuid.UUID
+    care_group_id: uuid.UUID
+    name: str
+    blood_type: Optional[str]
+    allergies: List[str]
+    emergency_contacts: List[dict[str, Any]]
+    created_at: datetime
+    updated_at: datetime
 
 class TaskCreate(BaseModel):
     title: str
