@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.API_BASE_URL || "http://127.0.0.1:8000";
 
@@ -56,17 +57,40 @@ export async function completeTaskAction(taskId: string) {
  */
 export async function logMedicationAction(protocolId: string) {
   try {
-    const ADMIN_USER_ID = "d4e5f6a7-b8c9-0123-defa-234567890123"; // Mock admin user
+    const cookieStore = await cookies();
+    const token = cookieStore.get("cc_access_token")?.value;
+
+    if (!token) {
+      return { success: false, error: "Sessão expirada. Faça login novamente." };
+    }
+
+    // Retrieve the real user profile to log the correct administrator ID
+    let userId = "d4e5f6a7-b8c9-0123-defa-234567890123";
+    try {
+      const meRes = await fetch(`${API_BASE_URL}/api/v1/auth/me`, {
+        headers: { "Authorization": `Bearer ${token}` },
+        cache: "no-store",
+      });
+      if (meRes.ok) {
+        const user = await meRes.json();
+        userId = user.id;
+      }
+    } catch (e) {
+      console.error("Erro ao obter perfil para registrar dose:", e);
+    }
 
     const payload = {
-      administered_by: ADMIN_USER_ID,
+      administered_by: userId,
       administered_at: new Date().toISOString(),
       notes: "Administrado via Painel Web",
     };
 
     const res = await fetch(`${API_BASE_URL}/api/v1/protocols/${protocolId}/logs`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
       body: JSON.stringify(payload),
     });
 
