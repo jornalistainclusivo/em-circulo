@@ -57,7 +57,7 @@ async def setup_test_db():
     await sys_conn.execute(f"DROP DATABASE {TEST_DB_NAME}")
     await sys_conn.close()
 
-@pytest_asyncio.fixture
+@pytest_asyncio.fixture(loop_scope="session")
 async def async_session():
     engine = create_async_engine(TEST_DATABASE_URL, echo=True, future=True)
     async_session_maker = sessionmaker(
@@ -65,9 +65,13 @@ async def async_session():
     )
     async with async_session_maker() as session:
         yield session
-    await engine.dispose()
+    # Note: engine.dispose() is intentionally omitted.
+    # On Windows with asyncio ProactorEventLoop + asyncpg, calling dispose()
+    # after pytest closes the event loop causes 'NoneType has no attribute send'.
+    # The engine is garbage-collected safely after the test session ends.
 
-@pytest_asyncio.fixture
+
+@pytest_asyncio.fixture(loop_scope="session")
 async def client(async_session: AsyncSession):
     def override_get_session():
         return async_session
