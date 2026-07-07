@@ -130,6 +130,15 @@ class MedicationLogResponse(BaseModel):
     stock_alert: bool = False
     remaining_balance: int
 
+class MedicationLogTimelineResponse(BaseModel):
+    id: uuid.UUID
+    protocol_id: uuid.UUID
+    medication_name: str
+    dosage: str
+    administered_by: str  # Nome do cuidador (User.full_name)
+    administered_at: datetime
+    notes: Optional[str] = None
+
 # ---------------------------------------------------------------------------
 # Update Schemas — Phase 5 (Full CRUD)
 # ---------------------------------------------------------------------------

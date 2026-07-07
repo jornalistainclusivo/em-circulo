@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { MedicationPanel } from "@/components/MedicationPanel";
 import type { MedicationProtocol, CareGroup, CareRecipient } from "@/types";
 import styles from "./page.module.css";
-import { logMedicationAction } from "../actions";
+import { logMedicationAction, getMedicationLogsAction } from "../actions";
 
 async function fetchProtocols(recipientId: string, token: string): Promise<MedicationProtocol[]> {
   try {
@@ -76,6 +76,8 @@ export default async function MedicamentosPage() {
 
   const activeRecipient = recipients[0];
   const protocols = await fetchProtocols(activeRecipient.id, token);
+  const logsResult = await getMedicationLogsAction(activeRecipient.id);
+  const logs = logsResult.success ? (logsResult.logs || []) : [];
 
   return (
     <article className={styles.container}>
@@ -90,6 +92,7 @@ export default async function MedicamentosPage() {
         recipientId={activeRecipient.id}
         recipientName={activeRecipient.name}
         protocols={protocols}
+        logs={logs}
         onLogMedication={logMedicationAction}
       />
     </article>

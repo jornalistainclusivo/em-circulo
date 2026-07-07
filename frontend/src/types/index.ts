@@ -6,6 +6,7 @@ export {
   type Task,
   type MedicationProtocol,
   type MedicationLog,
+  type MedicationLogTimeline,
   toISODateString,
   fromISODateString,
 } from "./domain";

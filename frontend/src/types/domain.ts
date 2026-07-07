@@ -108,3 +108,14 @@ export interface MedicationLog {
   notes?: string | null;
   readonly created_at: ISODateString;
 }
+
+/** MedicationLogTimeline — Log resolves with joins for UI representation */
+export interface MedicationLogTimeline {
+  readonly id: string;
+  protocol_id: string;
+  medication_name: string;
+  dosage: string;
+  administered_by: string; // Cuidador full_name
+  administered_at: ISODateString;
+  notes?: string | null;
+}

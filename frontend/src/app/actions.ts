@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import type { MedicationLogTimeline } from "@/types";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.API_BASE_URL || "http://127.0.0.1:8000";
 
@@ -582,6 +583,37 @@ export async function acceptInviteAction(
     return { success: true };
   } catch (error) {
     console.error("acceptInviteAction error:", error);
+    return { success: false, error: "Erro de conexão." };
+  }
+}
+
+/**
+ * Server Action: Buscar Histórico de Doses (Logs) do Paciente
+ */
+export async function getMedicationLogsAction(
+  recipientId: string
+): Promise<{ success: boolean; logs?: MedicationLogTimeline[]; error?: string }> {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("cc_access_token")?.value;
+  if (!token) return { success: false, error: "Sessão expirada. Faça login novamente." };
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/care-recipients/${recipientId}/medication-logs`, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+      cache: "no-store"
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      return { success: false, error: data.detail || "Falha ao carregar logs." };
+    }
+
+    return { success: true, logs: data as MedicationLogTimeline[] };
+  } catch (error) {
+    console.error("getMedicationLogsAction error:", error);
     return { success: false, error: "Erro de conexão." };
   }
 }

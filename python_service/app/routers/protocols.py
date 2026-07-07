@@ -79,14 +79,38 @@ async def process_replenish_task(care_recipient_id: uuid.UUID, medication_name: 
             await db_session.commit()
 
 @router.post("/api/v1/protocols/{protocol_id}/logs", response_model=MedicationLogResponse)
-async def log_medication(protocol_id: uuid.UUID, payload: MedicationLogCreate, background_tasks: BackgroundTasks, session: AsyncSession = Depends(get_session)):
+async def log_medication(
+    protocol_id: uuid.UUID,
+    payload: MedicationLogCreate,
+    background_tasks: BackgroundTasks,
+    session: AsyncSession = Depends(get_session),
+    current_user: User = Depends(get_current_user)
+):
     protocol = await session.get(MedicationProtocol, protocol_id)
     if not protocol:
         raise HTTPException(status_code=404, detail="Protocol not found")
         
+    recipient = await session.get(CareRecipient, protocol.care_recipient_id)
+    if not recipient:
+        raise HTTPException(status_code=404, detail="Care recipient not found")
+
+    member_stmt = select(CareGroupMember).where(
+        CareGroupMember.care_group_id == recipient.care_group_id,
+        CareGroupMember.user_id == current_user.id
+    )
+    member_res = await session.execute(member_stmt)
+    member = member_res.scalar_one_or_none()
+    if not member:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only members of the care group can log doses"
+        )
+
     log = MedicationLog(
         protocol_id=protocol_id,
-        **payload.model_dump()
+        administered_by=member.id,
+        administered_at=payload.administered_at,
+        notes=payload.notes
     )
     
     # Deduct stock atomically and check threshold

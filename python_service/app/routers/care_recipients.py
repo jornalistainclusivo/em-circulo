@@ -5,7 +5,7 @@ import uuid
 
 from app.database import get_session
 from app.models import CareRecipient, CareGroupMember, UserRole, User, MedicationProtocol, MedicationLog
-from app.schemas import CareRecipientCreate, CareRecipientResponse, CareRecipientUpdate
+from app.schemas import CareRecipientCreate, CareRecipientResponse, CareRecipientUpdate, MedicationLogTimelineResponse
 from app.auth.dependencies import get_current_user, require_role
 
 router = APIRouter(prefix="/api/v1/care-recipients", tags=["Care Recipients"])
@@ -118,3 +118,45 @@ async def delete_care_recipient(
 
     await session.delete(recipient)
     await session.commit()
+
+
+@router.get(
+    "/{recipient_id}/medication-logs",
+    response_model=list[MedicationLogTimelineResponse],
+    status_code=status.HTTP_200_OK,
+    summary="Get clinical audit logs for a care recipient's medications"
+)
+async def get_medication_logs(
+    recipient_id: uuid.UUID,
+    session: AsyncSession = Depends(get_session),
+    role_check: CareGroupMember = Depends(require_role([UserRole.ADMIN, UserRole.CAREGIVER])),
+):
+    recipient = await session.get(CareRecipient, recipient_id)
+    if not recipient:
+        raise HTTPException(status_code=404, detail="Care recipient not found")
+
+    stmt = (
+        select(MedicationLog, MedicationProtocol, User)
+        .join(MedicationProtocol, MedicationLog.protocol_id == MedicationProtocol.id)
+        .join(CareGroupMember, MedicationLog.administered_by == CareGroupMember.id)
+        .join(User, CareGroupMember.user_id == User.id)
+        .where(MedicationProtocol.care_recipient_id == recipient_id)
+        .order_by(MedicationLog.administered_at.desc())
+    )
+    res = await session.execute(stmt)
+    results = res.all()
+
+    timeline_logs = []
+    for log, protocol, user in results:
+        timeline_logs.append(
+            MedicationLogTimelineResponse(
+                id=log.id,
+                protocol_id=log.protocol_id,
+                medication_name=protocol.medication_name,
+                dosage=protocol.dosage,
+                administered_by=user.full_name,
+                administered_at=log.administered_at,
+                notes=log.notes
+            )
+        )
+    return timeline_logs

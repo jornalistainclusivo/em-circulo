@@ -248,4 +248,30 @@ class InviteAccept(BaseModel):
 ## 7. Controle de Acesso e Segurança (FastAPI Dependency)
 A dependência `require_role(allowed_roles: List[UserRole])` resolve o contexto do Círculo de Cuidado (a partir de parâmetros de rota como `group_id`, `recipient_id`, `task_id` ou `protocol_id`) e valida se o membro ativo possui um dos papéis autorizados. Todas as rotas de exclusão física (`DELETE`) agora exigem a role `ADMIN`.
 
+---
+
+## 8. Rastreabilidade & Histórico Clínico (Fase 7)
+
+### Novos Contratos de API (FastAPI)
+
+#### Schemas Pydantic
+```python
+class MedicationLogTimelineResponse(BaseModel):
+    id: uuid.UUID
+    protocol_id: uuid.UUID
+    medication_name: str
+    dosage: str
+    administered_by: str  # Nome do cuidador (User.full_name)
+    administered_at: datetime
+    notes: Optional[str] = None
+```
+
+#### Endpoints
+**`GET /api/v1/care-recipients/{recipient_id}/medication-logs`**
+- **Auth:** Requer JWT Bearer Token e Role `ADMIN` ou `CAREGIVER` (membro do grupo do receptor).
+- **Parâmetros de Rota:** `recipient_id` (UUID)
+- **Response:** `200 OK` → `List[MedicationLogTimelineResponse]`
+- **Comportamento:** Retorna os registros de administração de medicamentos do receptor, ordenados decrescentemente por `administered_at`. O backend resolve via JOINs os nomes dos medicamentos e dos cuidadores correspondentes.
+
+
 
