@@ -25,6 +25,8 @@ class UserResponse(BaseModel):
     email: str
     full_name: str
     is_active: bool
+    whatsapp: Optional[str] = None
+    profession: Optional[str] = None
     created_at: datetime
 
 
@@ -37,6 +39,13 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     """Decoded claims extracted from a JWT payload."""
     user_id: Optional[str] = None
+
+
+class UserUpdate(BaseModel):
+    """Payload for PATCH /api/v1/users/me."""
+    full_name: Optional[str] = None
+    whatsapp: Optional[str] = None
+    profession: Optional[str] = None
 
 
 # ---------------------------------------------------------------------------
@@ -59,6 +68,8 @@ class CareRecipientCreate(BaseModel):
     blood_type: Optional[str] = None
     allergies: List[str] = []
     emergency_contacts: List[dict[str, Any]] = []
+    medical_conditions: Optional[str] = None
+    observations: Optional[str] = None
 
 class CareRecipientResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -68,6 +79,8 @@ class CareRecipientResponse(BaseModel):
     blood_type: Optional[str]
     allergies: List[str]
     emergency_contacts: List[dict[str, Any]]
+    medical_conditions: Optional[str] = None
+    observations: Optional[str] = None
     created_at: datetime
     updated_at: datetime
 
@@ -151,6 +164,8 @@ class CareRecipientUpdate(BaseModel):
     blood_type: Optional[str] = None
     allergies: Optional[List[str]] = None
     emergency_contacts: Optional[List[dict[str, Any]]] = None
+    medical_conditions: Optional[str] = None
+    observations: Optional[str] = None
 
 class TaskUpdate(BaseModel):
     title: Optional[str] = None

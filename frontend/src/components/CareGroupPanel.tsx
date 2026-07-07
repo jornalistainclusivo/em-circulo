@@ -164,6 +164,20 @@ export function CareGroupPanel({
                 </dd>
               </>
             )}
+
+            {recipient.medical_conditions && (
+              <>
+                <dt>Condições Médicas</dt>
+                <dd style={{ whiteSpace: "pre-wrap" }}>{recipient.medical_conditions}</dd>
+              </>
+            )}
+
+            {recipient.observations && (
+              <>
+                <dt>Observações</dt>
+                <dd style={{ whiteSpace: "pre-wrap" }}>{recipient.observations}</dd>
+              </>
+            )}
           </dl>
         </article>
       ) : (

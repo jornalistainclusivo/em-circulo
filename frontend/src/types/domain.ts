@@ -66,6 +66,8 @@ export interface CareRecipient {
   blood_type?: string | null;
   allergies: string[];
   emergency_contacts: Record<string, unknown>[];
+  medical_conditions?: string | null;
+  observations?: string | null;
   readonly created_at: ISODateString;
   readonly updated_at: ISODateString;
 }
@@ -118,4 +120,15 @@ export interface MedicationLogTimeline {
   administered_by: string; // Cuidador full_name
   administered_at: ISODateString;
   notes?: string | null;
+}
+
+/** User — Usuário Registrado (users table) */
+export interface User {
+  readonly id: string;
+  email: string;
+  full_name: string;
+  is_active: boolean;
+  whatsapp?: string | null;
+  profession?: string | null;
+  readonly created_at: ISODateString;
 }

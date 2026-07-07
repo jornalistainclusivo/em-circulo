@@ -428,15 +428,17 @@ export async function updateCareRecipientAction(
   const name = formData.get("name") as string;
   const bloodType = formData.get("blood_type") as string;
   const allergiesRaw = formData.get("allergies") as string;
-
+  const medicalConditions = formData.get("medical_conditions") as string;
+  const observations = formData.get("observations") as string;
+ 
   if (!name) return { success: false, error: "Nome do paciente é obrigatório." };
-
+ 
   const cookieStore = await cookies();
   const token = cookieStore.get("cc_access_token")?.value;
   if (!token) return { success: false, error: "Sessão expirada." };
-
+ 
   const allergies = allergiesRaw ? allergiesRaw.split(",").map(s => s.trim()).filter(Boolean) : [];
-
+ 
   try {
     const res = await fetch(`${API_BASE_URL}/api/v1/care-recipients/${recipientId}`, {
       method: "PATCH",
@@ -448,12 +450,14 @@ export async function updateCareRecipientAction(
         name,
         blood_type: bloodType || null,
         allergies,
+        medical_conditions: medicalConditions || null,
+        observations: observations || null,
       }),
     });
-
+ 
     const data = await res.json();
     if (!res.ok) return { success: false, error: data.detail || "Falha ao editar paciente." };
-
+ 
     revalidatePath("/");
     return { success: true };
   } catch (error) {
@@ -614,6 +618,48 @@ export async function getMedicationLogsAction(
     return { success: true, logs: data as MedicationLogTimeline[] };
   } catch (error) {
     console.error("getMedicationLogsAction error:", error);
+    return { success: false, error: "Erro de conexão." };
+  }
+}
+
+/**
+ * Server Action: Editar Perfil do Cuidador
+ */
+export async function updateProfileAction(
+  prevState: FormState | null,
+  formData: FormData
+): Promise<FormState> {
+  const fullName = formData.get("full_name") as string;
+  const whatsapp = formData.get("whatsapp") as string;
+  const profession = formData.get("profession") as string;
+
+  if (!fullName) return { success: false, error: "Nome completo é obrigatório." };
+
+  const cookieStore = await cookies();
+  const token = cookieStore.get("cc_access_token")?.value;
+  if (!token) return { success: false, error: "Sessão expirada." };
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/users/me`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        full_name: fullName,
+        whatsapp: whatsapp || null,
+        profession: profession || null,
+      }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) return { success: false, error: data.detail || "Falha ao editar perfil." };
+
+    revalidatePath("/");
+    return { success: true };
+  } catch (error) {
+    console.error("updateProfileAction error:", error);
     return { success: false, error: "Erro de conexão." };
   }
 }

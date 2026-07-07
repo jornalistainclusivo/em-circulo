@@ -25,6 +25,8 @@ class User(SQLModel, table=True):
     hashed_password: str = Field(max_length=255)
     full_name: str = Field(max_length=255)
     is_active: bool = Field(default=True)
+    whatsapp: Optional[str] = Field(default=None, max_length=50)
+    profession: Optional[str] = Field(default=None, max_length=255)
     created_at: datetime = Field(sa_column=Column(DateTime(timezone=True), default=utc_now))
     updated_at: datetime = Field(sa_column=Column(DateTime(timezone=True), default=utc_now))
 
@@ -82,6 +84,8 @@ class CareRecipient(SQLModel, table=True):
     blood_type: Optional[str] = Field(default=None, max_length=10)
     allergies: List[str] = Field(default=[], sa_column=Column(JSON))
     emergency_contacts: List[dict[str, Any]] = Field(default=[], sa_column=Column(JSON))
+    medical_conditions: Optional[str] = Field(default=None)
+    observations: Optional[str] = Field(default=None)
     created_at: datetime = Field(sa_column=Column(DateTime(timezone=True), default=utc_now))
     updated_at: datetime = Field(sa_column=Column(DateTime(timezone=True), default=utc_now))
 

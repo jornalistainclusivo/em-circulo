@@ -20,6 +20,8 @@ interface EditFormModalProps {
     name?: string;
     blood_type?: string | null;
     allergies?: string[];
+    medical_conditions?: string | null;
+    observations?: string | null;
   };
   onClose: () => void;
   onSubmitAction?: (
@@ -292,6 +294,30 @@ export function EditFormModal({
                     defaultValue={initialData?.allergies?.join(", ") || ""}
                     placeholder="Ex: Dipirona, Penicilina, Poeira"
                     className={styles.input}
+                    disabled={isPending}
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="edit-rec-conditions" className={styles.label}>Condições Médicas (Opcional)</label>
+                  <textarea
+                    id="edit-rec-conditions"
+                    name="medical_conditions"
+                    defaultValue={initialData?.medical_conditions || ""}
+                    placeholder="Ex: Diabetes tipo 2, Hipertensão, Alzheimer..."
+                    className={styles.input}
+                    style={{ minHeight: "100px", resize: "vertical" }}
+                    disabled={isPending}
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="edit-rec-observations" className={styles.label}>Observações Gerais (Opcional)</label>
+                  <textarea
+                    id="edit-rec-observations"
+                    name="observations"
+                    defaultValue={initialData?.observations || ""}
+                    placeholder="Preferências de rotina, contatos médicos adicionais..."
+                    className={styles.input}
+                    style={{ minHeight: "100px", resize: "vertical" }}
                     disabled={isPending}
                   />
                 </div>

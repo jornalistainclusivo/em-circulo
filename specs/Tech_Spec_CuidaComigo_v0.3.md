@@ -273,5 +273,52 @@ class MedicationLogTimelineResponse(BaseModel):
 - **Response:** `200 OK` → `List[MedicationLogTimelineResponse]`
 - **Comportamento:** Retorna os registros de administração de medicamentos do receptor, ordenados decrescentemente por `administered_at`. O backend resolve via JOINs os nomes dos medicamentos e dos cuidadores correspondentes.
 
+---
+
+## 9. Enriquecimento de Perfis (Fase 8)
+
+Esta fase adiciona dados adicionais aos cuidadores e pacientes, além de uma rota dedicada para edição do perfil do cuidador.
+
+### Alterações nos Schemas do Banco de Dados
+
+#### Tabela `users`
+* `whatsapp`: `VARCHAR(50)`, opcional (NULL).
+* `profession`: `VARCHAR(255)`, opcional (NULL).
+
+#### Tabela `care_recipients`
+* `medical_conditions`: `TEXT`, opcional (NULL).
+* `observations`: `TEXT`, opcional (NULL).
+
+### Novos Contratos de API (FastAPI)
+
+#### Schemas Pydantic
+
+```python
+class UserUpdate(BaseModel):
+    full_name: Optional[str] = None
+    whatsapp: Optional[str] = None
+    profession: Optional[str] = None
+
+# Modificações nas respostas:
+# UserResponse agora inclui whatsapp e profession (como opcionais)
+# CareRecipientCreate e CareRecipientResponse agora incluem medical_conditions e observations (como opcionais)
+# CareRecipientUpdate agora inclui medical_conditions e observations (como opcionais)
+```
+
+#### Endpoints
+
+**`PATCH /api/v1/users/me`**
+- **Auth:** Requer JWT Bearer Token.
+- **Request Body:** `UserUpdate`
+- **Response:** `200 OK` → `UserResponse`
+- **Comportamento:** Permite que o usuário autenticado atualize seus próprios dados cadastrais (nome completo, whatsapp e profissão/parentesco).
+
+**`PATCH /api/v1/care-recipients/{recipient_id}` (Atualização de Contrato)**
+- **Auth:** Requer JWT Bearer Token e participação no grupo de cuidado.
+- **Request Body:** `CareRecipientUpdate`
+- **Response:** `200 OK` → `CareRecipientResponse`
+- **Comportamento:** Permite que qualquer membro do grupo de cuidado atualize o perfil do paciente, incluindo os novos campos de condições médicas e observações.
+
+
 
 

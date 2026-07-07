@@ -7,6 +7,7 @@ export {
   type MedicationProtocol,
   type MedicationLog,
   type MedicationLogTimeline,
+  type User,
   toISODateString,
   fromISODateString,
 } from "./domain";
