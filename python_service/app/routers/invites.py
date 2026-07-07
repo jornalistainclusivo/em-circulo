@@ -97,8 +97,10 @@ async def accept_invite(
     member = member_res.scalar_one_or_none()
 
     if member:
-        # Already a member: return successful detail (no-op)
-        return {"detail": "User is already a member of this CareGroup"}
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Você já faz parte deste grupo"
+        )
 
     # Add user as member
     new_member = CareGroupMember(

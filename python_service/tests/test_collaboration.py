@@ -235,3 +235,30 @@ async def test_list_care_group_members(client: AsyncClient, async_session: Async
     roles = {m["user_id"]: m["role"] for m in members}
     assert roles[str(admin["id"])] == "ADMIN"
     assert roles[str(caregiver["id"])] == "CAREGIVER"
+
+
+@pytest.mark.asyncio
+async def test_invite_accept_already_member_fails(client: AsyncClient):
+    admin = await create_auth_user(client, "admin_already@example.com", "Admin Already")
+    
+    group_res = await client.post(
+        "/api/v1/care-groups",
+        json={"name": "Grupo Duplicado"},
+        headers=admin["headers"]
+    )
+    group_id = group_res.json()["id"]
+    
+    invite_res = await client.post(
+        "/api/v1/invites",
+        json={"care_group_id": group_id},
+        headers=admin["headers"]
+    )
+    token = invite_res.json()["token"]
+    
+    accept_res = await client.post(
+        "/api/v1/invites/accept",
+        json={"token": token},
+        headers=admin["headers"]
+    )
+    assert accept_res.status_code == 400
+    assert accept_res.json()["detail"] == "Você já faz parte deste grupo"

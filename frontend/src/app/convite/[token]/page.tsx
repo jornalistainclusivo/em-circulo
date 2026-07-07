@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { acceptInviteAction } from "../../actions";
+import styles from "../../login/login.module.css";
 
 interface InvitePageProps {
   params: Promise<{ token: string }>;
@@ -26,78 +27,86 @@ export default async function InvitePage({ params }: InvitePageProps) {
     redirect("/");
   }
 
-  // 3. Invite is invalid or expired
+  const isAlreadyMember = result.error === "Você já faz parte deste grupo";
+
+  // 3. Render styling identical to Login screen with clear contrast
   return (
-    <main
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "100vh",
-        padding: "var(--space-4)",
-        backgroundColor: "var(--color-bg-primary, #0b1114)",
-      }}
-    >
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "480px",
-          backgroundColor: "var(--color-bg-secondary, #111a1e)",
-          border: "1px solid var(--color-border, #1f2c31)",
-          borderRadius: "var(--radius-xl, 16px)",
-          padding: "var(--space-5)",
-          textAlign: "center",
-          boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)",
-        }}
-      >
-        <div
-          aria-hidden="true"
-          style={{
-            fontSize: "3rem",
-            marginBottom: "var(--space-3)",
-            display: "inline-block",
-          }}
-        >
-          ⚠️
+    <div className={styles.container}>
+      <div className={styles.card}>
+        <header className={styles.header}>
+          <h1 className={styles.title}>Cuida Comigo</h1>
+          <p className={styles.subtitle}>Convite para Círculo de Cuidado</p>
+        </header>
+
+        <div className={styles.formContent} style={{ textAlign: "center" }}>
+          {isAlreadyMember ? (
+            <>
+              <div aria-hidden="true" style={{ fontSize: "3rem", marginBottom: "var(--space-3)" }}>
+                ✅
+              </div>
+              <h2
+                style={{
+                  fontSize: "var(--font-size-lg)",
+                  fontWeight: "var(--font-weight-bold)",
+                  color: "var(--color-primary)",
+                  margin: "0 0 var(--space-2) 0",
+                }}
+              >
+                Acesso Autorizado
+              </h2>
+              <p
+                style={{
+                  fontSize: "var(--font-size-sm)",
+                  color: "var(--color-text-secondary)",
+                  lineHeight: "var(--line-height-normal)",
+                  margin: "0 0 var(--space-5) 0",
+                }}
+              >
+                Você já faz parte deste círculo de cuidado! Não é necessário aceitar o convite novamente.
+              </p>
+            </>
+          ) : (
+            <>
+              <div aria-hidden="true" style={{ fontSize: "3rem", marginBottom: "var(--space-3)" }}>
+                ⚠️
+              </div>
+              <h2
+                style={{
+                  fontSize: "var(--font-size-lg)",
+                  fontWeight: "var(--font-weight-bold)",
+                  color: "var(--color-accent)",
+                  margin: "0 0 var(--space-2) 0",
+                }}
+              >
+                Convite Inválido ou Expirado
+              </h2>
+              <p
+                style={{
+                  fontSize: "var(--font-size-sm)",
+                  color: "var(--color-text-secondary)",
+                  lineHeight: "var(--line-height-normal)",
+                  margin: "0 0 var(--space-5) 0",
+                }}
+              >
+                {result.error || "Este link de convite é inválido ou expirou após o limite de 48 horas. Solicite um novo link ao administrador."}
+              </p>
+            </>
+          )}
+
+          <Link
+            href="/"
+            className="btn btn--primary"
+            style={{
+              display: "inline-flex",
+              width: "100%",
+              textDecoration: "none",
+              justifyContent: "center",
+            }}
+          >
+            Ir para o Painel Principal
+          </Link>
         </div>
-        <h1
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: "var(--font-weight-bold, 700)",
-            color: "#f59e0b",
-            margin: "0 0 var(--space-2) 0",
-          }}
-        >
-          Convite Inválido ou Expirado
-        </h1>
-        <p
-          style={{
-            fontSize: "0.95rem",
-            color: "var(--color-text-secondary, #94a3b8)",
-            lineHeight: "1.5",
-            margin: "0 0 var(--space-4) 0",
-          }}
-        >
-          Este link de convite é inválido ou expirou após o limite de 48 horas. Solicite um novo link ao administrador do grupo.
-        </p>
-        <Link
-          href="/"
-          className="btn btn--primary"
-          style={{
-            display: "inline-block",
-            textDecoration: "none",
-            width: "100%",
-            textAlign: "center",
-            padding: "var(--space-2) var(--space-4)",
-            backgroundColor: "#2dd4bf",
-            color: "#0f172a",
-            fontWeight: "600",
-            borderRadius: "var(--radius-lg, 8px)",
-          }}
-        >
-          Ir para o Painel Principal
-        </Link>
       </div>
-    </main>
+    </div>
   );
 }
