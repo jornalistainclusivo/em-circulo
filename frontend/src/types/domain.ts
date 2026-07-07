@@ -8,7 +8,7 @@
 
 // ── ENUMs (mirrored from PostgreSQL) ──────────────────────────────
 
-export type UserRole = "ADMIN" | "SUPPORT";
+export type UserRole = "ADMIN" | "CAREGIVER";
 
 export type TaskStatus =
   | "PENDING"

@@ -518,3 +518,70 @@ export async function deleteCareRecipientAction(recipientId: string): Promise<Fo
     return { success: false, error: "Erro de conexão." };
   }
 }
+
+
+/**
+ * Server Action: Criar Convite para Grupo de Cuidado
+ */
+export async function createInviteAction(
+  groupId: string
+): Promise<{ success: boolean; inviteLink?: string; error?: string }> {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("cc_access_token")?.value;
+  if (!token) return { success: false, error: "Sessão expirada." };
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/invites`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify({ care_group_id: groupId }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      return { success: false, error: data.detail || "Falha ao criar convite." };
+    }
+
+    return { success: true, inviteLink: data.invite_link };
+  } catch (error) {
+    console.error("createInviteAction error:", error);
+    return { success: false, error: "Erro de conexão." };
+  }
+}
+
+
+/**
+ * Server Action: Aceitar Convite do Grupo de Cuidado
+ */
+export async function acceptInviteAction(
+  inviteToken: string
+): Promise<{ success: boolean; error?: string }> {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("cc_access_token")?.value;
+  if (!token) return { success: false, error: "Sessão expirada. Faça login para aceitar o convite." };
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/invites/accept`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify({ token: inviteToken }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      return { success: false, error: data.detail || "Falha ao aceitar convite." };
+    }
+
+    revalidatePath("/");
+    return { success: true };
+  } catch (error) {
+    console.error("acceptInviteAction error:", error);
+    return { success: false, error: "Erro de conexão." };
+  }
+}

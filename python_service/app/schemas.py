@@ -156,3 +156,29 @@ class ProtocolUpdate(BaseModel):
     frequency_interval_hours: Optional[int] = None
     stock_count: Optional[int] = None
     safety_threshold: Optional[int] = None
+
+
+# ---------------------------------------------------------------------------
+# Invite Schemas — Phase 6 (Collaboration & RBAC)
+# ---------------------------------------------------------------------------
+
+class InviteCreate(BaseModel):
+    care_group_id: uuid.UUID
+
+
+class InviteResponse(BaseModel):
+    token: str
+    invite_link: str
+
+
+class InviteAccept(BaseModel):
+    token: str
+
+
+class CareGroupMemberResponse(BaseModel):
+    id: uuid.UUID
+    care_group_id: uuid.UUID
+    user_id: uuid.UUID
+    role: str
+    full_name: str
+    email: str

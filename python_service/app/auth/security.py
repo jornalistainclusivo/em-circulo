@@ -50,10 +50,11 @@ def create_access_token(
 ) -> str:
     """Sign and return a JWT containing `data` as payload."""
     to_encode = data.copy()
-    expire = datetime.now(timezone.utc) + (
-        expires_delta if expires_delta else timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    )
-    to_encode["exp"] = expire
+    if "exp" not in to_encode:
+        expire = datetime.now(timezone.utc) + (
+            expires_delta if expires_delta else timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+        )
+        to_encode["exp"] = expire
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
 

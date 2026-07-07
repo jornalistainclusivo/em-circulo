@@ -35,7 +35,7 @@ class User(SQLModel, table=True):
 
 class UserRole(str, Enum):
     ADMIN = "ADMIN"
-    SUPPORT = "SUPPORT"
+    CAREGIVER = "CAREGIVER"
 
 class TaskStatus(str, Enum):
     PENDING = "PENDING"
@@ -67,7 +67,7 @@ class CareGroupMember(SQLModel, table=True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     care_group_id: uuid.UUID = Field(foreign_key="care_groups.id")
     user_id: uuid.UUID = Field(index=True)
-    role: UserRole = Field(default=UserRole.SUPPORT)
+    role: UserRole = Field(default=UserRole.CAREGIVER)
     joined_at: datetime = Field(sa_column=Column(DateTime(timezone=True), default=utc_now))
 
     care_group: CareGroup = Relationship(back_populates="members")

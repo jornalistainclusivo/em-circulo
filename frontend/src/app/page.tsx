@@ -8,6 +8,7 @@ import type {
   CareRecipient,
   Task,
   ISODateString,
+  UserRole,
 } from "@/types";
 import { claimTaskAction, completeTaskAction } from "./actions";
 import styles from "./page.module.css";
@@ -114,20 +115,53 @@ export default async function DashboardPage() {
   const activeRecipient = recipients[0];
   const tasks = await fetchTasks(activeGroup.id, token);
 
-  // Construct dynamic member profile and usernames map
-  const groupMembers: CareGroupMember[] = [
-    {
-      id: currentUser.id,
-      care_group_id: activeGroup.id,
-      user_id: currentUser.id,
-      role: "ADMIN",
-      joined_at: currentUser.created_at as ISODateString
-    }
-  ];
+  interface CareGroupMemberResponse {
+    id: string;
+    care_group_id: string;
+    user_id: string;
+    role: string;
+    full_name: string;
+    email: string;
+  }
 
-  const userNamesMap: Record<string, string> = {
-    [currentUser.id]: currentUser.full_name
-  };
+  // 4. Fetch care group members
+  let groupMembers: CareGroupMember[] = [];
+  const userNamesMap: Record<string, string> = {};
+
+  try {
+    const membersRes = await fetch(`${API_BASE_URL}/api/v1/care-groups/${activeGroup.id}/members`, {
+      headers: { "Authorization": `Bearer ${token}` },
+      cache: "no-store"
+    });
+    if (membersRes.ok) {
+      const dbMembers = await membersRes.json() as CareGroupMemberResponse[];
+      groupMembers = dbMembers.map((m) => ({
+        id: m.id,
+        care_group_id: m.care_group_id,
+        user_id: m.user_id,
+        role: m.role as UserRole,
+        joined_at: new Date().toISOString() as ISODateString
+      }));
+      dbMembers.forEach((m) => {
+        userNamesMap[m.user_id] = m.full_name;
+      });
+    }
+  } catch (error) {
+    console.error("Erro ao carregar membros:", error);
+  }
+
+  if (groupMembers.length === 0) {
+    groupMembers = [
+      {
+        id: currentUser.id,
+        care_group_id: activeGroup.id,
+        user_id: currentUser.id,
+        role: "ADMIN",
+        joined_at: currentUser.created_at as ISODateString
+      }
+    ];
+    userNamesMap[currentUser.id] = currentUser.full_name;
+  }
 
   return (
     <article className={styles.dashboard}>
@@ -143,6 +177,7 @@ export default async function DashboardPage() {
         recipient={activeRecipient}
         members={groupMembers}
         userNames={userNamesMap}
+        currentUserId={currentUser.id}
       />
 
       <TaskPanel

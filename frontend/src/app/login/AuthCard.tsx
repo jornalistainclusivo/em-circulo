@@ -4,7 +4,11 @@ import { useState, useActionState, useEffect } from "react";
 import { loginAction, registerAction } from "../actions/auth";
 import styles from "./login.module.css";
 
-export function AuthCard() {
+interface AuthCardProps {
+  invite?: string;
+}
+
+export function AuthCard({ invite }: AuthCardProps) {
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
 
   // React 19 useActionState hooks
@@ -101,6 +105,7 @@ export function AuthCard() {
             action={loginFormAction}
             noValidate
           >
+            {invite && <input type="hidden" name="invite" value={invite} />}
             <div className={styles.formGroup}>
               <label htmlFor="login-email" className={styles.label}>
                 E-mail
@@ -153,6 +158,7 @@ export function AuthCard() {
             action={registerFormAction}
             noValidate
           >
+            {invite && <input type="hidden" name="invite" value={invite} />}
             <div className={styles.formGroup}>
               <label htmlFor="register-name" className={styles.label}>
                 Nome Completo

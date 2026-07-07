@@ -200,3 +200,52 @@ class CareRecipientResponse(BaseModel):
 - **Auth:** Requer JWT Bearer Token.
 - **Response:** `204 No Content`
 
+---
+
+## 6. Círculo de Colaboração & RBAC (Fase 6)
+
+### Alteração de Roles
+A role `SUPPORT` foi descontinuada e renomeada para `CAREGIVER`.
+A nova matriz de papéis (RBAC) está definida da seguinte forma:
+
+| Funcionalidade / Rota | ADMIN | CAREGIVER |
+| --- | --- | --- |
+| Visualizar dados (GET) | Sim | Sim |
+| Criar/Editar recursos (POST/PATCH) | Sim | Sim |
+| Gerar Convites (`POST /api/v1/invites`) | **Sim** | Não (403) |
+| Excluir recursos (`DELETE`) | **Sim** | Não (403) |
+
+### Novos Contratos de API (FastAPI)
+
+#### Schemas Pydantic
+```python
+class InviteCreate(BaseModel):
+    care_group_id: uuid.UUID
+
+class InviteResponse(BaseModel):
+    token: str
+    invite_link: str
+
+class InviteAccept(BaseModel):
+    token: str
+```
+
+#### Endpoints
+**`POST /api/v1/invites`**
+- **Auth:** Requer JWT Bearer Token e Role `ADMIN`.
+- **Request Body:** `InviteCreate`
+- **Response:** `201 Created` → `InviteResponse`
+- **Comportamento:** Cria um token JWT contendo `sub: "invite"`, o ID do grupo de cuidado `care_group_id` e data de expiração definida para **48 horas** a partir do momento atual.
+
+**`POST /api/v1/invites/accept`**
+- **Auth:** Requer JWT Bearer Token.
+- **Request Body:** `InviteAccept`
+- **Response:** `200 OK`
+- **Comportamento:** Processa a validação do token JWT de convite. Em caso de sucesso, verifica se o usuário já é membro do grupo. Caso não seja, insere o usuário atual na tabela `care_group_members` vinculando-o ao grupo com a role `CAREGIVER`.
+
+---
+
+## 7. Controle de Acesso e Segurança (FastAPI Dependency)
+A dependência `require_role(allowed_roles: List[UserRole])` resolve o contexto do Círculo de Cuidado (a partir de parâmetros de rota como `group_id`, `recipient_id`, `task_id` ou `protocol_id`) e valida se o membro ativo possui um dos papéis autorizados. Todas as rotas de exclusão física (`DELETE`) agora exigem a role `ADMIN`.
+
+

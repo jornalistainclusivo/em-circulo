@@ -3,7 +3,13 @@
 import { useState } from "react";
 import type { CareGroup, CareGroupMember, CareRecipient } from "@/types";
 import styles from "./CareGroupPanel.module.css";
-import { updateCareGroupAction, deleteCareGroupAction, updateCareRecipientAction, deleteCareRecipientAction } from "../app/actions";
+import {
+  updateCareGroupAction,
+  deleteCareGroupAction,
+  updateCareRecipientAction,
+  deleteCareRecipientAction,
+  createInviteAction,
+} from "../app/actions";
 import { EditFormModal } from "./EditFormModal";
 
 interface CareGroupPanelProps {
@@ -11,6 +17,7 @@ interface CareGroupPanelProps {
   recipient: CareRecipient | null;
   members: CareGroupMember[];
   userNames: Record<string, string>;
+  currentUserId?: string;
 }
 
 export function CareGroupPanel({
@@ -18,6 +25,7 @@ export function CareGroupPanel({
   recipient,
   members,
   userNames,
+  currentUserId,
 }: CareGroupPanelProps) {
   const [editingGroup, setEditingGroup] = useState<CareGroup | null>(null);
   const [deletingGroupId, setDeletingGroupId] = useState<string | null>(null);
@@ -26,6 +34,38 @@ export function CareGroupPanel({
   const [editingRecipient, setEditingRecipient] = useState<CareRecipient | null>(null);
   const [deletingRecipientId, setDeletingRecipientId] = useState<string | null>(null);
   const [deletingRecipientName, setDeletingRecipientName] = useState("");
+
+  const [inviteLink, setInviteLink] = useState<string | null>(null);
+  const [inviteError, setInviteError] = useState<string | null>(null);
+  const [generating, setGenerating] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const handleGenerateInvite = async () => {
+    setGenerating(true);
+    setInviteError(null);
+    setInviteLink(null);
+    setCopied(false);
+    try {
+      const res = await createInviteAction(group.id);
+      if (res.success && res.inviteLink) {
+        setInviteLink(res.inviteLink);
+      } else {
+        setInviteError(res.error || "Erro ao gerar convite.");
+      }
+    } catch {
+      setInviteError("Erro de conexão ao gerar convite.");
+    } finally {
+      setGenerating(false);
+    }
+  };
+
+  const handleCopyLink = () => {
+    if (inviteLink) {
+      navigator.clipboard.writeText(inviteLink);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000);
+    }
+  };
 
   const headingId = `group-heading-${group.id}`;
   const recipientHeadingId = `recipient-heading-${group.id}`;
@@ -163,9 +203,9 @@ export function CareGroupPanel({
                   </div>
                   <span
                     className={`badge ${member.role === "ADMIN" ? "badge--claimed" : "badge--pending"}`}
-                    aria-label={`Função: ${member.role === "ADMIN" ? "Administrador" : "Apoio"}`}
+                    aria-label={`Função: ${member.role === "ADMIN" ? "Administrador" : "Cuidador"}`}
                   >
-                    {member.role === "ADMIN" ? "Admin" : "Apoio"}
+                    {member.role === "ADMIN" ? "Admin" : "Cuidador"}
                   </span>
                 </li>
               );
@@ -174,6 +214,84 @@ export function CareGroupPanel({
         ) : (
           <p role="status">Nenhum membro neste grupo.</p>
         )}
+
+        {/* Invite and RBAC Management Section */}
+        {(() => {
+          const currentUserMember = members.find((m) => m.user_id === currentUserId);
+          const isAdmin = currentUserMember?.role === "ADMIN";
+          if (!isAdmin) return null;
+
+          return (
+            <div
+              style={{
+                marginTop: "var(--space-4)",
+                padding: "var(--space-3)",
+                backgroundColor: "var(--color-bg-secondary, #1a2327)",
+                border: "1px solid var(--color-border, #2d3b41)",
+                borderRadius: "var(--radius-xl)",
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--space-2)",
+              }}
+            >
+              <h4 style={{ margin: 0, fontSize: "0.95rem", color: "#2dd4bf" }}>
+                Gerenciar Círculo de Cuidado
+              </h4>
+              <p style={{ margin: 0, fontSize: "0.85rem", color: "var(--color-text-secondary, #94a3b8)" }}>
+                Gere um link de convite atrelado a este grupo de cuidado. Novos membros entrarão automaticamente como <strong>Cuidadores</strong>. O convite expira em 48 horas.
+              </p>
+              
+              <div style={{ display: "flex", gap: "var(--space-2)", flexWrap: "wrap", alignItems: "center", marginTop: "var(--space-1)" }}>
+                <button
+                  type="button"
+                  className="btn btn--secondary"
+                  style={{ minHeight: "auto", padding: "var(--space-1) var(--space-3)", border: "1px solid var(--color-border)" }}
+                  onClick={handleGenerateInvite}
+                  disabled={generating}
+                >
+                  {generating ? "Gerando..." : "Gerar Link de Convite"}
+                </button>
+                {inviteLink && (
+                  <button
+                    type="button"
+                    className="btn btn--primary"
+                    style={{ minHeight: "auto", padding: "var(--space-1) var(--space-3)", backgroundColor: "#d97706", color: "#fff" }}
+                    onClick={handleCopyLink}
+                  >
+                    {copied ? "✓ Copiado!" : "Copiar Link"}
+                  </button>
+                )}
+              </div>
+
+              {inviteLink && (
+                <code
+                  style={{
+                    fontSize: "0.8rem",
+                    wordBreak: "break-all",
+                    padding: "var(--space-1) var(--space-2)",
+                    backgroundColor: "#0f172a",
+                    border: "1px solid #1e293b",
+                    borderRadius: "var(--radius-md)",
+                    color: "#38bdf8",
+                  }}
+                >
+                  {inviteLink}
+                </code>
+              )}
+
+              {inviteError && (
+                <span style={{ fontSize: "0.85rem", color: "var(--color-danger, #ef4444)" }}>
+                  {inviteError}
+                </span>
+              )}
+
+              {/* Accessible Live Region */}
+              <div aria-live="polite" className="visually-hidden" style={{ position: "absolute", width: "1px", height: "1px", padding: 0, margin: "-1px", overflow: "hidden", clip: "rect(0, 0, 0, 0)", border: 0 }}>
+                {copied ? "Link de convite copiado para a área de transferência!" : ""}
+              </div>
+            </div>
+          );
+        })()}
       </section>
 
       {editingGroup && (

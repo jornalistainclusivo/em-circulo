@@ -4,9 +4,9 @@ from sqlmodel import select
 import uuid
 
 from app.database import get_session
-from app.models import Task, TaskStatus, CareGroupMember, utc_now, User
+from app.models import Task, TaskStatus, CareGroupMember, utc_now, User, UserRole
 from app.schemas import TaskClaimRequest, TaskClaimResponse, TaskResponse, TaskUpdate
-from app.auth.dependencies import get_current_user
+from app.auth.dependencies import get_current_user, require_role
 
 router = APIRouter(prefix="/api/v1/tasks", tags=["Tasks"])
 
@@ -91,20 +91,11 @@ async def delete_task(
     task_id: uuid.UUID,
     session: AsyncSession = Depends(get_session),
     current_user: User = Depends(get_current_user),
+    role_check: CareGroupMember = Depends(require_role([UserRole.ADMIN])),
 ):
     task = await session.get(Task, task_id)
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
-
-    # Verify membership in care group
-    member_stmt = select(CareGroupMember).where(
-        CareGroupMember.care_group_id == task.care_group_id,
-        CareGroupMember.user_id == current_user.id
-    )
-    member_result = await session.execute(member_stmt)
-    member = member_result.scalar_one_or_none()
-    if not member:
-        raise HTTPException(status_code=403, detail="Not a member of the CareGroup for this task")
 
     await session.delete(task)
     await session.commit()

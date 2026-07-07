@@ -6,8 +6,8 @@ from typing import List
 from app.database import get_session
 from sqlmodel import select
 from app.models import CareGroup, CareGroupMember, UserRole, User, Task, CareRecipient, MedicationProtocol, MedicationLog
-from app.schemas import CareGroupCreate, CareGroupResponse, TaskCreate, TaskResponse, CareRecipientResponse, CareGroupUpdate
-from app.auth.dependencies import get_current_user
+from app.schemas import CareGroupCreate, CareGroupResponse, TaskCreate, TaskResponse, CareRecipientResponse, CareGroupUpdate, CareGroupMemberResponse
+from app.auth.dependencies import get_current_user, require_role
 
 router = APIRouter(prefix="/api/v1/care-groups", tags=["Care Groups"])
 
@@ -41,6 +41,39 @@ async def get_care_group_recipients(
     result = await session.execute(stmt)
     recipients = result.scalars().all()
     return recipients
+
+@router.get("/{group_id}/members", response_model=List[CareGroupMemberResponse])
+async def list_care_group_members(
+    group_id: uuid.UUID,
+    session: AsyncSession = Depends(get_session),
+    current_user: User = Depends(get_current_user)
+):
+    # Verify membership
+    member_stmt = select(CareGroupMember).where(
+        CareGroupMember.care_group_id == group_id,
+        CareGroupMember.user_id == current_user.id
+    )
+    member_result = await session.execute(member_stmt)
+    member = member_result.scalar_one_or_none()
+    if not member:
+        raise HTTPException(status_code=403, detail="Not a member of this care group")
+        
+    # Get all members with user details
+    stmt = select(CareGroupMember, User).join(User, CareGroupMember.user_id == User.id).where(CareGroupMember.care_group_id == group_id)
+    result = await session.execute(stmt)
+    rows = result.all()
+    
+    return [
+        CareGroupMemberResponse(
+            id=m.id,
+            care_group_id=m.care_group_id,
+            user_id=m.user_id,
+            role=m.role.value,
+            full_name=u.full_name,
+            email=u.email
+        )
+        for m, u in rows
+    ]
 
 @router.post(
     "",
@@ -161,20 +194,11 @@ async def delete_care_group(
     group_id: uuid.UUID,
     session: AsyncSession = Depends(get_session),
     current_user: User = Depends(get_current_user),
+    role_check: CareGroupMember = Depends(require_role([UserRole.ADMIN])),
 ):
     group = await session.get(CareGroup, group_id)
     if not group:
         raise HTTPException(status_code=404, detail="Care group not found")
-
-    # Verify membership
-    member_stmt = select(CareGroupMember).where(
-        CareGroupMember.care_group_id == group_id,
-        CareGroupMember.user_id == current_user.id
-    )
-    member_result = await session.execute(member_stmt)
-    member = member_result.scalar_one_or_none()
-    if not member:
-        raise HTTPException(status_code=403, detail="Not a member of this care group")
 
     # Explicit Cascading Deletions to prevent FK errors
     # 1. Patients, Protocols, Logs

@@ -6,7 +6,7 @@ import uuid
 from app.database import get_session
 from app.models import CareRecipient, CareGroupMember, UserRole, User, MedicationProtocol, MedicationLog
 from app.schemas import CareRecipientCreate, CareRecipientResponse, CareRecipientUpdate
-from app.auth.dependencies import get_current_user
+from app.auth.dependencies import get_current_user, require_role
 
 router = APIRouter(prefix="/api/v1/care-recipients", tags=["Care Recipients"])
 
@@ -98,20 +98,11 @@ async def delete_care_recipient(
     recipient_id: uuid.UUID,
     session: AsyncSession = Depends(get_session),
     current_user: User = Depends(get_current_user),
+    role_check: CareGroupMember = Depends(require_role([UserRole.ADMIN])),
 ):
     recipient = await session.get(CareRecipient, recipient_id)
     if not recipient:
         raise HTTPException(status_code=404, detail="Care recipient not found")
-
-    # Verify membership
-    member_stmt = select(CareGroupMember).where(
-        CareGroupMember.care_group_id == recipient.care_group_id,
-        CareGroupMember.user_id == current_user.id
-    )
-    member_result = await session.execute(member_stmt)
-    member = member_result.scalar_one_or_none()
-    if not member:
-        raise HTTPException(status_code=403, detail="Not a member of the CareGroup managing this recipient")
 
     # Explicit Cascading Deletions: Protocols and Logs
     prot_stmt = select(MedicationProtocol).where(MedicationProtocol.care_recipient_id == recipient_id)

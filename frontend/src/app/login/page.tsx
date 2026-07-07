@@ -7,10 +7,16 @@ export const metadata: Metadata = {
   description: "Faça login ou crie sua conta para gerenciar e compartilhar o cuidado.",
 };
 
-export default function LoginPage() {
+interface LoginPageProps {
+  searchParams: Promise<{ invite?: string }>;
+}
+
+export default async function LoginPage({ searchParams }: LoginPageProps) {
+  const { invite } = await searchParams;
+
   return (
     <div className={styles.container}>
-      <AuthCard />
+      <AuthCard invite={invite} />
     </div>
   );
 }

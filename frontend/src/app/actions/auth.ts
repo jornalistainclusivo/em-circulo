@@ -63,6 +63,22 @@ export async function loginAction(
       path: "/",
     });
 
+    const invite = formData.get("invite") as string;
+    if (invite) {
+      try {
+        await fetch(`${API_BASE_URL}/api/v1/invites/accept`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${access_token}`,
+          },
+          body: JSON.stringify({ token: invite }),
+        });
+      } catch (err) {
+        console.error("Erro ao aceitar convite durante login:", err);
+      }
+    }
+
   } catch (error) {
     console.error("Login action error:", error);
     return {
@@ -71,7 +87,7 @@ export async function loginAction(
     };
   }
 
-  // Redirect after cookie is set (redirect must be called outside try/catch or rethrown)
+  // Redirect after cookie is set
   redirect("/");
 }
 
@@ -145,6 +161,22 @@ export async function registerAction(
           maxAge: 60 * 60 * 24 * 7, // 7 days
           path: "/",
         });
+
+        const invite = formData.get("invite") as string;
+        if (invite) {
+          try {
+            await fetch(`${API_BASE_URL}/api/v1/invites/accept`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${access_token}`,
+              },
+              body: JSON.stringify({ token: invite }),
+            });
+          } catch (err) {
+            console.error("Erro ao aceitar convite durante registro:", err);
+          }
+        }
       }
     } else {
       // If login fails for some reason, redirect to login page with a success message
