@@ -46,6 +46,12 @@ class TaskStatus(str, Enum):
     COMPLETED = "COMPLETED"
     CANCELLED = "CANCELLED"
 
+class NotificationType(str, Enum):
+    DOSE_REGISTERED = "DOSE_REGISTERED"
+    TASK_CREATED = "TASK_CREATED"
+    TASK_COMPLETED = "TASK_COMPLETED"
+    STOCK_ALERT = "STOCK_ALERT"
+
 
 # ---------------------------------------------------------------------------
 # Domain models (v0.1 / v0.2)
@@ -62,6 +68,7 @@ class CareGroup(SQLModel, table=True):
     members: List["CareGroupMember"] = Relationship(back_populates="care_group")
     recipients: List["CareRecipient"] = Relationship(back_populates="care_group")
     tasks: List["Task"] = Relationship(back_populates="care_group")
+    notifications: List["Notification"] = Relationship(back_populates="care_group")
 
 class CareGroupMember(SQLModel, table=True):
     __tablename__ = "care_group_members"
@@ -136,3 +143,26 @@ class MedicationLog(SQLModel, table=True):
     created_at: datetime = Field(sa_column=Column(DateTime(timezone=True), default=utc_now))
 
     protocol: MedicationProtocol = Relationship(back_populates="logs")
+
+
+# ---------------------------------------------------------------------------
+# Notification — Fase 10.1 (Real-time group awareness)
+# ---------------------------------------------------------------------------
+
+class Notification(SQLModel, table=True):
+    """Persistent notification record attached to a CareGroup.
+    Generated inline when critical actions occur (dose logged, task completed).
+    Consumed by the frontend via polling every 30s.
+    """
+
+    __tablename__ = "notifications"
+
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    care_group_id: uuid.UUID = Field(foreign_key="care_groups.id", index=True)
+    title: str = Field(max_length=255)
+    message: str = Field(max_length=500)
+    type: NotificationType = Field(default=NotificationType.DOSE_REGISTERED)
+    is_read: bool = Field(default=False)
+    created_at: datetime = Field(sa_column=Column(DateTime(timezone=True), default=utc_now))
+
+    care_group: CareGroup = Relationship(back_populates="notifications")

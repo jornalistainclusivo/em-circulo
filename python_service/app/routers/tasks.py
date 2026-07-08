@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 import uuid
 
 from app.database import get_session
-from app.models import Task, TaskStatus, CareGroupMember, utc_now, User, UserRole
+from app.models import Task, TaskStatus, CareGroupMember, utc_now, User, UserRole, Notification, NotificationType
 from app.schemas import TaskClaimRequest, TaskClaimResponse, TaskResponse, TaskUpdate
 from app.auth.dependencies import get_current_user, require_role
 
@@ -31,12 +31,12 @@ async def claim_task(task_id: uuid.UUID, request: TaskClaimRequest, session: Asy
     
     return task
 
-async def notify_group_task_completed(task_id: uuid.UUID):
-    import logging
-    logging.info(f"Notification Triggered: Task {task_id} foi concluída pelo membro responsável.")
-
 @router.patch("/{task_id}/complete", response_model=TaskResponse)
-async def complete_task(task_id: uuid.UUID, background_tasks: BackgroundTasks, session: AsyncSession = Depends(get_session)):
+async def complete_task(
+    task_id: uuid.UUID,
+    session: AsyncSession = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
     task = await session.get(Task, task_id)
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
@@ -49,9 +49,16 @@ async def complete_task(task_id: uuid.UUID, background_tasks: BackgroundTasks, s
     session.add(task)
     await session.commit()
     await session.refresh(task)
-    
-    # Injeta side effect de notificação no Background
-    background_tasks.add_task(notify_group_task_completed, task.id)
+
+    # Inline notification — replace stub logging with real DB record
+    notification = Notification(
+        care_group_id=task.care_group_id,
+        title="Tarefa concluída",
+        message=f"{current_user.full_name} concluiu a tarefa: {task.title}",
+        type=NotificationType.TASK_COMPLETED,
+    )
+    session.add(notification)
+    await session.commit()
     
     return task
 

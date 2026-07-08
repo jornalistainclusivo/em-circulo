@@ -5,7 +5,7 @@ import uuid
 from typing import List
 from sqlmodel import select
 from app.database import get_session
-from app.models import MedicationProtocol, MedicationLog, CareRecipient, Task, TaskStatus, utc_now, User, CareGroupMember, UserRole
+from app.models import MedicationProtocol, MedicationLog, CareRecipient, Task, TaskStatus, utc_now, User, CareGroupMember, UserRole, Notification, NotificationType
 from app.schemas import ProtocolCreate, MedicationLogCreate, MedicationProtocolResponse, MedicationLogResponse, ProtocolUpdate
 from app.auth.dependencies import get_current_user, require_role
 
@@ -132,7 +132,17 @@ async def log_medication(
     session.add(protocol)
     await session.commit()
     await session.refresh(log)
-    
+
+    # Inline notification — same session, atomic with the log commit
+    notification = Notification(
+        care_group_id=recipient.care_group_id,
+        title="Dose registrada",
+        message=f"{current_user.full_name} administrou {protocol.medication_name} ({protocol.dosage})",
+        type=NotificationType.DOSE_REGISTERED,
+    )
+    session.add(notification)
+    await session.commit()
+
     return MedicationLogResponse(
         id=log.id,
         protocol_id=log.protocol_id,

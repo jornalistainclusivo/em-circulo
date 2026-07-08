@@ -1,7 +1,9 @@
 import { cookies } from "next/headers";
 import type { Metadata, Viewport } from "next";
+import { Toaster } from "sonner";
 import { SkipLink } from "@/components/SkipLink";
 import { Navigation } from "@/components/Navigation";
+import { NotificationBell } from "@/components/NotificationBell";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -42,6 +44,9 @@ export default async function RootLayout({
 
         <Navigation isLoggedIn={isLoggedIn} />
 
+        {/* NotificationBell — client component, auto-suficiente (busca o groupId internamente) */}
+        {isLoggedIn && <NotificationBell />}
+
         <main id="main-content" tabIndex={-1}>
           {children}
         </main>
@@ -53,6 +58,22 @@ export default async function RootLayout({
             </small>
           </p>
         </footer>
+
+        {/* Sonner Toaster — Design System Teal/Amber */}
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            style: {
+              background: "var(--color-surface, #ffffff)",
+              color: "var(--color-text-primary, #111827)",
+              border: "1px solid var(--color-border, #e5e7eb)",
+              borderRadius: "12px",
+              boxShadow: "0 8px 32px rgba(13,79,79,0.12)",
+              fontFamily: "inherit",
+            },
+          }}
+          richColors
+        />
       </body>
     </html>
   );

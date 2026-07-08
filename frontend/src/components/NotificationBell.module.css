@@ -1,0 +1,72 @@
+/* NotificationBell.module.css
+ * Design System: Teal/Amber, WCAG AAA contrast
+ * Micro-animations via CSS transitions (respects prefers-reduced-motion)
+ */
+
+.bellWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bellButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  color: var(--color-text-secondary, #4b5563);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+  line-height: 1;
+}
+
+.bellButton:hover,
+.bellButton:focus-visible {
+  background: rgba(13, 79, 79, 0.08);
+  color: var(--color-primary, #0d4f4f);
+  outline: 2px solid var(--color-primary, #0d4f4f);
+  outline-offset: 2px;
+}
+
+.bellButton:active {
+  transform: scale(0.95);
+}
+
+/* Badge de contagem */
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  background: var(--color-amber, #f59e0b);
+  color: #1a1a1a;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  /* Pulse animation para chamar atenção */
+  animation: pulse-badge 2s ease-in-out 3;
+}
+
+@keyframes pulse-badge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* Respeita preferência do SO por movimento reduzido (WCAG 2.2 AAA) */
+@media (prefers-reduced-motion: reduce) {
+  .bellButton,
+  .badge {
+    transition: none;
+    animation: none;
+  }
+}

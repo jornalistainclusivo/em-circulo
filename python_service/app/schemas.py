@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Optional, Any, List
 from pydantic import BaseModel, EmailStr, ConfigDict
 
-from app.models import TaskStatus
+from app.models import TaskStatus, NotificationType
 
 
 # ---------------------------------------------------------------------------
@@ -206,3 +206,20 @@ class CareGroupMemberResponse(BaseModel):
     role: str
     full_name: str
     email: str
+
+
+# ---------------------------------------------------------------------------
+# Notification Schemas — Fase 10.1 (Real-time group awareness)
+# ---------------------------------------------------------------------------
+
+class NotificationResponse(BaseModel):
+    """Read-only representation of a group notification."""
+    model_config = ConfigDict(from_attributes=True)
+
+    id: uuid.UUID
+    care_group_id: uuid.UUID
+    title: str
+    message: str
+    type: NotificationType
+    is_read: bool
+    created_at: datetime
