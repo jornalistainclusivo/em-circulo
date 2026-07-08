@@ -23,7 +23,8 @@ export interface Notification {
  */
 export async function getNotificationsAction(
   groupId: string,
-  unreadOnly: boolean = false
+  unreadOnly: boolean = false,
+  _timestamp?: number
 ): Promise<Notification[]> {
   const cookieStore = await cookies();
   const token = cookieStore.get("cc_access_token")?.value;
@@ -31,9 +32,13 @@ export async function getNotificationsAction(
   if (!token || !groupId) return [];
 
   try {
-    const params = unreadOnly ? "?unread=true" : "";
+    const params = new URLSearchParams();
+    if (unreadOnly) params.append("unread", "true");
+    if (_timestamp) params.append("_t", _timestamp.toString());
+    const queryString = params.toString() ? `?${params.toString()}` : "";
+
     const res = await fetch(
-      `http://localhost:8000/api/v1/care-groups/${groupId}/notifications${params}`,
+      `http://127.0.0.1:8000/api/v1/care-groups/${groupId}/notifications${queryString}`,
       {
         headers: { Authorization: `Bearer ${token}` },
         cache: "no-store",
@@ -55,19 +60,26 @@ export async function getMyGroupIdAction(): Promise<string | null> {
   const cookieStore = await cookies();
   const token = cookieStore.get("cc_access_token")?.value;
 
+  console.log("[getMyGroupIdAction] Token present:", !!token);
+
   if (!token) return null;
 
   try {
-    const res = await fetch("http://localhost:8000/api/v1/care-groups", {
+    const res = await fetch("http://127.0.0.1:8000/api/v1/care-groups", {
       headers: { Authorization: `Bearer ${token}` },
       cache: "no-store",
     });
 
+    console.log("[getMyGroupIdAction] fetch status:", res.status);
+
     if (!res.ok) return null;
     const data = await res.json();
+    console.log("[getMyGroupIdAction] data length:", data?.length);
+    
     // API returns a list of care groups, we take the first one
     return data && data.length > 0 ? data[0].id : null;
-  } catch {
+  } catch (error) {
+    console.error("[getMyGroupIdAction] Fetch error:", error);
     return null;
   }
 }

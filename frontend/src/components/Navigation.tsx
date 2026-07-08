@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { logoutAction } from "@/app/actions/auth";
+import { NotificationBell } from "@/components/NotificationBell";
 import styles from "./Navigation.module.css";
 
 interface NavigationProps {
@@ -56,18 +57,21 @@ export function Navigation({ isLoggedIn = false }: NavigationProps) {
           >
             Perfil
           </Link>
-          <button
-            onClick={() => logoutAction()}
-            className={styles.navLink}
-            style={{ 
-              background: "none", 
-              border: "none", 
-              cursor: "pointer",
-              color: "var(--color-danger)"
-            }}
-          >
-            Sair
-          </button>
+          <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: "var(--space-4)" }}>
+            <NotificationBell />
+            <button
+              onClick={() => logoutAction()}
+              className={styles.navLink}
+              style={{ 
+                background: "none", 
+                border: "none", 
+                cursor: "pointer",
+                color: "var(--color-danger)"
+              }}
+            >
+              Sair
+            </button>
+          </div>
         </nav>
       )}
     </header>

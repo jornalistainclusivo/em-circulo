@@ -3,7 +3,6 @@ import type { Metadata, Viewport } from "next";
 import { Toaster } from "sonner";
 import { SkipLink } from "@/components/SkipLink";
 import { Navigation } from "@/components/Navigation";
-import { NotificationBell } from "@/components/NotificationBell";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -43,9 +42,6 @@ export default async function RootLayout({
         <SkipLink />
 
         <Navigation isLoggedIn={isLoggedIn} />
-
-        {/* NotificationBell — client component, auto-suficiente (busca o groupId internamente) */}
-        {isLoggedIn && <NotificationBell />}
 
         <main id="main-content" tabIndex={-1}>
           {children}

@@ -20,9 +20,10 @@ import {
   getMyGroupIdAction,
   type Notification,
 } from "@/app/actions/notifications";
+import { useRouter } from "next/navigation";
 import styles from "./NotificationBell.module.css";
 
-const POLL_INTERVAL_MS = 30_000;
+const POLL_INTERVAL_MS = 5_000;
 
 const NOTIFICATION_ICONS: Record<Notification["type"], string> = {
   DOSE_REGISTERED: "💊",
@@ -32,6 +33,7 @@ const NOTIFICATION_ICONS: Record<Notification["type"], string> = {
 };
 
 export function NotificationBell() {
+  const router = useRouter();
   const [groupId, setGroupId] = useState<string | null>(null);
   const [unreadCount, setUnreadCount] = useState(0);
   const lastSeenIdRef = useRef<string | null>(null);
@@ -39,6 +41,7 @@ export function NotificationBell() {
   // Step 1: Bootstrap groupId (runs once on mount)
   useEffect(() => {
     getMyGroupIdAction().then((id) => {
+      console.log("[NotificationBell] getMyGroupIdAction returned:", id);
       if (id) setGroupId(id);
     });
   }, []);
@@ -48,8 +51,9 @@ export function NotificationBell() {
     if (!groupId) return;
 
     async function fetchAndToast() {
+      console.log("[NotificationBell] Polling notifications...", new Date().toISOString());
       try {
-        const notifications = await getNotificationsAction(groupId!, true);
+        const notifications = await getNotificationsAction(groupId!, true, Date.now());
         setUnreadCount(notifications.length);
 
         if (notifications.length === 0) return;
@@ -93,12 +97,13 @@ export function NotificationBell() {
       <button
         type="button"
         className={styles.bellButton}
+        onClick={() => router.push("/notificacoes")}
         aria-label={
           unreadCount > 0
             ? `${unreadCount} notificação${unreadCount > 1 ? "ões" : ""} não lida${unreadCount > 1 ? "s" : ""}`
             : "Notificações — nenhuma nova"
         }
-        title="Notificações"
+        title="Ver notificações"
       >
         {/* Bell SVG icon — inline for zero dependency */}
         <svg
