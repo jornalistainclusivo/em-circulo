@@ -51,6 +51,7 @@ class NotificationType(str, Enum):
     TASK_CREATED = "TASK_CREATED"
     TASK_COMPLETED = "TASK_COMPLETED"
     STOCK_ALERT = "STOCK_ALERT"
+    DOSE_ATRASADA = "DOSE_ATRASADA"
 
 
 # ---------------------------------------------------------------------------
@@ -128,6 +129,7 @@ class MedicationProtocol(SQLModel, table=True):
     stock_count: int = Field(default=0)
     safety_threshold: int = Field(default=0)
     next_due_at: Optional[datetime] = Field(sa_column=Column(DateTime(timezone=True), index=True), default=None)
+    last_delay_alert_sent_at: Optional[datetime] = Field(sa_column=Column(DateTime(timezone=True)), default=None)
     assignee_id: Optional[uuid.UUID] = Field(default=None, foreign_key="care_group_members.id")
     created_at: datetime = Field(sa_column=Column(DateTime(timezone=True), default=utc_now))
     updated_at: datetime = Field(sa_column=Column(DateTime(timezone=True), default=utc_now))

@@ -118,6 +118,7 @@ class ProtocolCreate(BaseModel):
     stock_count: int
     safety_threshold: int
     next_due_at: Optional[datetime] = None
+    last_delay_alert_sent_at: Optional[datetime] = None
     assignee_id: Optional[uuid.UUID] = None
 
 class MedicationProtocolResponse(BaseModel):
@@ -129,6 +130,7 @@ class MedicationProtocolResponse(BaseModel):
     stock_count: int
     safety_threshold: int
     next_due_at: Optional[datetime]
+    last_delay_alert_sent_at: Optional[datetime]
     assignee_id: Optional[uuid.UUID]
     created_at: datetime
     updated_at: datetime
@@ -185,6 +187,7 @@ class ProtocolUpdate(BaseModel):
     stock_count: Optional[int] = None
     safety_threshold: Optional[int] = None
     next_due_at: Optional[datetime] = None
+    last_delay_alert_sent_at: Optional[datetime] = None
     assignee_id: Optional[uuid.UUID] = None
 
 

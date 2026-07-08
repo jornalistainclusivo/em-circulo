@@ -231,3 +231,54 @@ async def test_mark_notification_as_read(client: AsyncClient, async_session: Asy
     result = await async_session.execute(stmt)
     db_notification = result.scalar_one_or_none()
     assert db_notification.is_read is True
+
+# ---------------------------------------------------------------------------
+# Tests — Cron Engine (Delayed Medications)
+# ---------------------------------------------------------------------------
+from datetime import timedelta
+from app.scheduler import check_delayed_medications
+
+@pytest.mark.asyncio
+async def test_cron_generates_delayed_notification(async_session: AsyncSession):
+    user, group, _, recipient, protocol = await create_full_setup(async_session, role=UserRole.ADMIN)
+    
+    group_id = group.id
+    protocol_id = protocol.id
+
+    # Simula atraso: next_due_at foi 15 minutos atrás
+    now = datetime.now(timezone.utc).replace(tzinfo=None)
+    protocol.next_due_at = now - timedelta(minutes=15)
+    async_session.add(protocol)
+    await async_session.commit()
+
+    # Roda o job manualmente
+    await check_delayed_medications()
+
+    async_session.expire_all()
+
+    # Verifica se a notificação foi gerada
+    stmt = select(Notification).where(
+        Notification.care_group_id == group_id,
+        Notification.type == NotificationType.DOSE_ATRASADA
+    )
+    result = await async_session.execute(stmt)
+    notification = result.scalar_one_or_none()
+
+    assert notification is not None, "A notificação de DOSE_ATRASADA deveria ser gerada."
+    
+    # Verifica a trava
+    stmt_prot = select(MedicationProtocol).where(MedicationProtocol.id == protocol_id)
+    res_prot = await async_session.execute(stmt_prot)
+    prot_db = res_prot.scalar_one_or_none()
+    
+    assert prot_db.last_delay_alert_sent_at is not None
+    
+    # Roda de novo, não deve gerar outra notificação pois a trava existe
+    await check_delayed_medications()
+    
+    async_session.expire_all()
+
+    result_dup = await async_session.execute(stmt)
+    notifications = result_dup.scalars().all()
+    assert len(notifications) == 1, "Não deve gerar notificação duplicada para a mesma dose atrasada."
+
