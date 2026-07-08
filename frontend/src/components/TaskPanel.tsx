@@ -12,6 +12,8 @@
  */
 
 import { useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import type { Task, TaskStatus } from "@/types";
 import styles from "./TaskPanel.module.css";
 import { CreateTaskForm } from "./CreateTaskForm";
@@ -53,12 +55,13 @@ export function TaskPanel({
   onClaimTask,
   onCompleteTask,
 }: TaskPanelProps) {
-  const [announcement, setAnnouncement] = useState("");
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [deletingTaskId, setDeletingTaskId] = useState<string | null>(null);
   const [deletingTaskTitle, setDeletingTaskTitle] = useState("");
+
+  const router = useRouter();
 
   const headingId = "task-panel-heading";
 
@@ -68,18 +71,15 @@ export function TaskPanel({
       setLoadingId(task.id);
       try {
         await onClaimTask(task.id, currentMemberId);
-        setAnnouncement(
-          `Tarefa "${task.title}" assumida com sucesso.`
-        );
+        toast.success(`Tarefa "${task.title}" assumida com sucesso.`);
+        router.refresh();
       } catch {
-        setAnnouncement(
-          `Erro ao assumir a tarefa "${task.title}". Tente novamente.`
-        );
+        toast.error(`Erro ao assumir a tarefa "${task.title}". Tente novamente.`);
       } finally {
         setLoadingId(null);
       }
     },
-    [currentMemberId, onClaimTask]
+    [currentMemberId, onClaimTask, router]
   );
 
   const handleComplete = useCallback(
@@ -88,18 +88,15 @@ export function TaskPanel({
       setLoadingId(task.id);
       try {
         await onCompleteTask(task.id);
-        setAnnouncement(
-          `Tarefa "${task.title}" concluída com sucesso.`
-        );
+        toast.success("Tarefa concluída!");
+        router.refresh();
       } catch {
-        setAnnouncement(
-          `Erro ao concluir a tarefa "${task.title}". Tente novamente.`
-        );
+        toast.error(`Erro ao concluir a tarefa "${task.title}". Tente novamente.`);
       } finally {
         setLoadingId(null);
       }
     },
-    [onCompleteTask]
+    [onCompleteTask, router]
   );
 
   const sortedTasks = [...tasks].sort(
@@ -126,10 +123,7 @@ export function TaskPanel({
         )}
       </div>
 
-      {/* Live region for screen reader announcements */}
-      <output aria-live="polite" aria-atomic="true" className="live-region">
-        {announcement}
-      </output>
+
 
       {isCreating && (
         <div style={{ marginBottom: "var(--space-6)" }}>
