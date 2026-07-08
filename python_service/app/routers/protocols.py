@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, status
 from sqlalchemy.ext.asyncio import AsyncSession
 import uuid
+from datetime import timedelta
 
 from typing import List
 from sqlmodel import select
@@ -127,6 +128,9 @@ async def log_medication(
             protocol.medication_name, 
             protocol.stock_count
         )
+
+    if protocol.frequency_interval_hours > 0:
+        protocol.next_due_at = payload.administered_at + timedelta(hours=protocol.frequency_interval_hours)
 
     session.add(log)
     session.add(protocol)

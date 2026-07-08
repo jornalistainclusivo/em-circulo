@@ -97,6 +97,8 @@ export interface MedicationProtocol {
   frequency_interval_hours: number;
   stock_count: number;
   safety_threshold: number;
+  next_due_at?: ISODateString | null;
+  assignee_id?: string | null;
   readonly created_at: ISODateString;
   readonly updated_at: ISODateString;
 }

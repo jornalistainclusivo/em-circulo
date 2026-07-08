@@ -6,11 +6,13 @@ import styles from "./CreateForm.module.css";
 
 interface CreateTaskFormProps {
   groupId: string;
+  members?: import("@/types").CareGroupMember[];
+  userNames?: Record<string, string>;
   onClose: () => void;
   onSuccess?: () => void;
 }
 
-export function CreateTaskForm({ groupId, onClose, onSuccess }: CreateTaskFormProps) {
+export function CreateTaskForm({ groupId, members = [], userNames = {}, onClose, onSuccess }: CreateTaskFormProps) {
   const createTaskWithGroupId = createTaskAction.bind(null, groupId);
   const [state, formAction, isPending] = useActionState(createTaskWithGroupId, null);
 
@@ -76,6 +78,26 @@ export function CreateTaskForm({ groupId, onClose, onSuccess }: CreateTaskFormPr
             className={styles.input}
             disabled={isPending}
           />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="task-assignee" className={styles.label}>
+            Responsável (Opcional)
+          </label>
+          <select
+            id="task-assignee"
+            name="assignee_id"
+            className={styles.input}
+            disabled={isPending}
+            style={{ appearance: "auto" }}
+          >
+            <option value="">(Nenhum)</option>
+            {members.map(member => (
+              <option key={member.id} value={member.id}>
+                {userNames[member.user_id] || "Usuário"} ({member.role})
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className={styles.actions}>

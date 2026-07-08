@@ -6,11 +6,13 @@ import styles from "./CreateForm.module.css";
 
 interface CreateProtocolFormProps {
   recipientId: string;
+  members?: import("@/types").CareGroupMember[];
+  userNames?: Record<string, string>;
   onClose: () => void;
   onSuccess?: () => void;
 }
 
-export function CreateProtocolForm({ recipientId, onClose, onSuccess }: CreateProtocolFormProps) {
+export function CreateProtocolForm({ recipientId, members = [], userNames = {}, onClose, onSuccess }: CreateProtocolFormProps) {
   const createProtocolWithRecipientId = createProtocolAction.bind(null, recipientId);
   const [state, formAction, isPending] = useActionState(createProtocolWithRecipientId, null);
 
@@ -112,6 +114,41 @@ export function CreateProtocolForm({ recipientId, onClose, onSuccess }: CreatePr
               className={styles.input}
               disabled={isPending}
             />
+          </div>
+        </div>
+
+        <div className={styles.formRow}>
+          <div className={styles.formGroup}>
+            <label htmlFor="next_due_at" className={styles.label}>
+              Próximo Horário (Opcional)
+            </label>
+            <input
+              id="next_due_at"
+              name="next_due_at"
+              type="datetime-local"
+              className={styles.input}
+              disabled={isPending}
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="assignee_id" className={styles.label}>
+              Responsável (Opcional)
+            </label>
+            <select
+              id="assignee_id"
+              name="assignee_id"
+              className={styles.input}
+              disabled={isPending}
+              style={{ appearance: "auto" }}
+            >
+              <option value="">(Nenhum)</option>
+              {members.map(member => (
+                <option key={member.id} value={member.id}>
+                  {userNames[member.user_id] || "Usuário"} ({member.role})
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 

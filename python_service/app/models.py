@@ -81,6 +81,7 @@ class CareGroupMember(SQLModel, table=True):
 
     care_group: CareGroup = Relationship(back_populates="members")
     assigned_tasks: List["Task"] = Relationship(back_populates="assignee")
+    assigned_protocols: List["MedicationProtocol"] = Relationship(back_populates="assignee")
 
 class CareRecipient(SQLModel, table=True):
     __tablename__ = "care_recipients"
@@ -126,11 +127,14 @@ class MedicationProtocol(SQLModel, table=True):
     frequency_interval_hours: int = Field(default=12)
     stock_count: int = Field(default=0)
     safety_threshold: int = Field(default=0)
+    next_due_at: Optional[datetime] = Field(sa_column=Column(DateTime(timezone=True), index=True), default=None)
+    assignee_id: Optional[uuid.UUID] = Field(default=None, foreign_key="care_group_members.id")
     created_at: datetime = Field(sa_column=Column(DateTime(timezone=True), default=utc_now))
     updated_at: datetime = Field(sa_column=Column(DateTime(timezone=True), default=utc_now))
 
     care_recipient: CareRecipient = Relationship(back_populates="protocols")
     logs: List["MedicationLog"] = Relationship(back_populates="protocol")
+    assignee: Optional["CareGroupMember"] = Relationship(back_populates="assigned_protocols")
 
 class MedicationLog(SQLModel, table=True):
     __tablename__ = "medication_logs"

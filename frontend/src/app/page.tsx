@@ -184,6 +184,8 @@ export default async function DashboardPage() {
         groupId={activeGroup.id}
         tasks={tasks}
         currentMemberId={groupMembers[0].id}
+        members={groupMembers}
+        userNames={userNamesMap}
         onClaimTask={claimTaskAction}
         onCompleteTask={completeTaskAction}
       />

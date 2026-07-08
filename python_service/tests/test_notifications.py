@@ -176,3 +176,26 @@ async def test_unread_filter_returns_only_unread(client: AsyncClient, async_sess
     assert len(data) == 1
     assert data[0]["is_read"] is False
     assert data[0]["title"] == "Não lida"
+
+
+@pytest.mark.asyncio
+async def test_logging_dose_updates_next_due_at(client: AsyncClient, async_session: AsyncSession):
+    user, group, member, recipient, protocol = await create_full_setup(async_session, role=UserRole.ADMIN)
+    app.dependency_overrides[get_current_user] = lambda: user
+
+    payload = {
+        "administered_by": str(member.id),
+        "administered_at": datetime.now(timezone.utc).isoformat(),
+        "notes": "Dose do almoco",
+    }
+
+    response = await client.post(f"/api/v1/protocols/{protocol.id}/logs", json=payload)
+    assert response.status_code == 200
+
+    await async_session.execute(select(MedicationProtocol).limit(0))
+    stmt = select(MedicationProtocol).where(MedicationProtocol.id == protocol.id)
+    result = await async_session.execute(stmt)
+    updated_protocol = result.scalar_one_or_none()
+
+    assert updated_protocol.next_due_at is not None
+

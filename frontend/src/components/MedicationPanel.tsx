@@ -12,10 +12,12 @@ interface MedicationPanelProps {
   recipientName: string;
   protocols: MedicationProtocol[];
   logs: MedicationLogTimeline[];
+  members?: import("@/types").CareGroupMember[];
+  userNames?: Record<string, string>;
   onLogMedication: (protocolId: string) => Promise<{ success: boolean; stock_alert?: boolean; remaining_balance?: number; error?: string } | void>;
 }
 
-export function MedicationPanel({ recipientId, recipientName, protocols, logs, onLogMedication }: MedicationPanelProps) {
+export function MedicationPanel({ recipientId, recipientName, protocols, logs, members = [], userNames = {}, onLogMedication }: MedicationPanelProps) {
   const [activeTab, setActiveTab] = useState<"protocols" | "logs">("protocols");
   const [selectedProtocolId, setSelectedProtocolId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -94,6 +96,8 @@ export function MedicationPanel({ recipientId, recipientName, protocols, logs, o
         <div style={{ marginBottom: "var(--space-6)" }}>
           <CreateProtocolForm
             recipientId={recipientId}
+            members={members}
+            userNames={userNames}
             onClose={() => setIsCreating(false)}
           />
         </div>
@@ -256,9 +260,11 @@ export function MedicationPanel({ recipientId, recipientName, protocols, logs, o
 
       {editingProtocol && (
         <EditFormModal
-          title="Editar Medicamento"
+          title={`Editar Medicamento: ${editingProtocol.medication_name}`}
           type="protocol"
           initialData={editingProtocol}
+          members={members}
+          userNames={userNames}
           onClose={() => setEditingProtocol(null)}
           onSubmitAction={updateProtocolAction.bind(null, editingProtocol.id)}
         />

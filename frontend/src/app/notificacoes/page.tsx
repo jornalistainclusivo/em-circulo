@@ -16,6 +16,7 @@ export default async function NotificacoesPage() {
   }
 
   // Busca notificações (ignora cache para ter dados frescos)
+  // eslint-disable-next-line react-hooks/purity
   const notifications = await getNotificationsAction(groupId, false, Date.now());
 
   return (

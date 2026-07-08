@@ -22,7 +22,11 @@ interface EditFormModalProps {
     allergies?: string[];
     medical_conditions?: string | null;
     observations?: string | null;
+    next_due_at?: string | null;
+    assignee_id?: string | null;
   };
+  members?: import("@/types").CareGroupMember[];
+  userNames?: Record<string, string>;
   onClose: () => void;
   onSubmitAction?: (
     prevState: { success: boolean; error?: string } | null,
@@ -35,6 +39,8 @@ export function EditFormModal({
   title,
   type,
   initialData,
+  members = [],
+  userNames = {},
   onClose,
   onSubmitAction,
   onDeleteAction,
@@ -157,6 +163,24 @@ export function EditFormModal({
                   />
                 </div>
                 <div className={styles.formGroup}>
+                  <label htmlFor="edit-task-assignee" className={styles.label}>Responsável (Opcional)</label>
+                  <select
+                    id="edit-task-assignee"
+                    name="assignee_id"
+                    defaultValue={initialData?.assignee_id || ""}
+                    className={styles.input}
+                    disabled={isPending}
+                    style={{ appearance: "auto" }}
+                  >
+                    <option value="">(Nenhum)</option>
+                    {members.map(member => (
+                      <option key={member.id} value={member.id}>
+                        {userNames[member.user_id] || "Usuário"} ({member.role})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className={styles.formGroup}>
                   <label htmlFor="edit-task-status" className={styles.label}>Status</label>
                   <select
                     id="edit-task-status"
@@ -239,6 +263,37 @@ export function EditFormModal({
                       className={styles.input}
                       disabled={isPending}
                     />
+                  </div>
+                </div>
+                <div className={styles.formRow}>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="edit-med-next-due" className={styles.label}>Próximo Horário</label>
+                    <input
+                      id="edit-med-next-due"
+                      name="next_due_at"
+                      type="datetime-local"
+                      defaultValue={formatDateTimeLocal(initialData?.next_due_at || undefined)}
+                      className={styles.input}
+                      disabled={isPending}
+                    />
+                  </div>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="edit-med-assignee" className={styles.label}>Responsável (Opcional)</label>
+                    <select
+                      id="edit-med-assignee"
+                      name="assignee_id"
+                      defaultValue={initialData?.assignee_id || ""}
+                      className={styles.input}
+                      disabled={isPending}
+                      style={{ appearance: "auto" }}
+                    >
+                      <option value="">(Nenhum)</option>
+                      {members.map(member => (
+                        <option key={member.id} value={member.id}>
+                          {userNames[member.user_id] || "Usuário"} ({member.role})
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
               </>

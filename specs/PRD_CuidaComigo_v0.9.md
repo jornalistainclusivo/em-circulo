@@ -52,3 +52,11 @@ Para garantir que a comunicação do Círculo de Cuidado flua de forma sincroniz
 * **Acessibilidade WCAG 2.2 AAA:** Toasts devem ser perfeitamente legíveis (constraste 7:1) e usar suporte `aria-live` (gerenciado pelo sonner). O sino possui rótulo claro e indicador visual. Animações respeitam `prefers-reduced-motion`.
 * **Performance do Polling:** O polling utiliza cache busting `Date.now()` para evitar leitura de HTTP responses antigas e opera sobre intervalos seguros que previnem vazamento de memória ou congelamento da UI (HMR support para o `app-router`).
 * **Suporte a IPv4/IPv6:** A infraestrutura de fetch Server Action respeita estritamente o host `127.0.0.1` contra falhas de resolução ECONNREFUSED em ambientes Node.js 18+.
+
+
+### 5. Fase 10.2: Fundação de Dados e Agendamento (Passo A)
+- **Objetivo:** Adicionar capacidade de agendamento e delegação na entidade de Protocolos de Medicamentos.
+- **Novos Campos em MedicationProtocol:**
+  - `next_due_at` (DateTime): Registra o próximo horário exato em que o medicamento deve ser tomado.
+  - `assignee_id` (UUID, FK para care_group_members): Define o membro do grupo responsável pelo protocolo.
+- **Regra de Negócio (Auto-Agendamento):** Ao registrar uma dose de medicamento (POST log), se o protocolo tiver `frequency_interval_hours`, o sistema calculará automaticamente e atualizará o `next_due_at` somando esse intervalo ao horário da administração.

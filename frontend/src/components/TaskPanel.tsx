@@ -22,6 +22,8 @@ interface TaskPanelProps {
   groupId: string;
   tasks: Task[];
   currentMemberId: string | null;
+  members?: import("@/types").CareGroupMember[];
+  userNames?: Record<string, string>;
   onClaimTask?: (taskId: string, memberId: string) => Promise<void>;
   onCompleteTask?: (taskId: string) => Promise<void>;
 }
@@ -46,6 +48,8 @@ export function TaskPanel({
   groupId,
   tasks,
   currentMemberId,
+  members = [],
+  userNames = {},
   onClaimTask,
   onCompleteTask,
 }: TaskPanelProps) {
@@ -131,6 +135,8 @@ export function TaskPanel({
         <div style={{ marginBottom: "var(--space-6)" }}>
           <CreateTaskForm
             groupId={groupId}
+            members={members}
+            userNames={userNames}
             onClose={() => setIsCreating(false)}
           />
         </div>
@@ -258,9 +264,11 @@ export function TaskPanel({
 
       {editingTask && (
         <EditFormModal
-          title="Editar Tarefa"
+          title={`Editar Tarefa: ${editingTask.title}`}
           type="task"
           initialData={editingTask}
+          members={members}
+          userNames={userNames}
           onClose={() => setEditingTask(null)}
           onSubmitAction={updateTaskAction.bind(null, editingTask.id)}
         />

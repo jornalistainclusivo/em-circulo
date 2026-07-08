@@ -134,6 +134,7 @@ export async function createTaskAction(
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
   const dueDateStr = formData.get("due_date") as string;
+  const assigneeId = formData.get("assignee_id") as string;
 
   if (!title || !dueDateStr) {
     return { success: false, error: "Título e data de vencimento são obrigatórios." };
@@ -157,6 +158,7 @@ export async function createTaskAction(
         title,
         description: description || null,
         due_date: new Date(dueDateStr).toISOString(),
+        assignee_id: assigneeId || null,
       }),
     });
 
@@ -186,6 +188,8 @@ export async function createProtocolAction(
   const frequencyRaw = formData.get("frequency_interval_hours") as string;
   const stockRaw = formData.get("stock_count") as string;
   const safetyRaw = formData.get("safety_threshold") as string;
+  const nextDueAtStr = formData.get("next_due_at") as string;
+  const assigneeId = formData.get("assignee_id") as string;
 
   if (!medicationName || !dosage || !frequencyRaw || !stockRaw || !safetyRaw) {
     return { success: false, error: "Todos os campos são obrigatórios." };
@@ -211,6 +215,8 @@ export async function createProtocolAction(
         frequency_interval_hours: parseInt(frequencyRaw, 10),
         stock_count: parseInt(stockRaw, 10),
         safety_threshold: parseInt(safetyRaw, 10),
+        next_due_at: nextDueAtStr ? new Date(nextDueAtStr).toISOString() : null,
+        assignee_id: assigneeId || null,
       }),
     });
 
@@ -239,6 +245,7 @@ export async function updateTaskAction(
   const description = formData.get("description") as string;
   const dueDateStr = formData.get("due_date") as string;
   const status = formData.get("status") as string;
+  const assigneeId = formData.get("assignee_id") as string;
 
   if (!title || !dueDateStr) {
     return { success: false, error: "Título e data de vencimento são obrigatórios." };
@@ -260,6 +267,7 @@ export async function updateTaskAction(
         description: description || null,
         due_date: new Date(dueDateStr).toISOString(),
         status: status || undefined,
+        assignee_id: assigneeId || null,
       }),
     });
 
@@ -316,6 +324,8 @@ export async function updateProtocolAction(
   const frequencyRaw = formData.get("frequency_interval_hours") as string;
   const stockRaw = formData.get("stock_count") as string;
   const safetyRaw = formData.get("safety_threshold") as string;
+  const nextDueAtStr = formData.get("next_due_at") as string;
+  const assigneeId = formData.get("assignee_id") as string;
 
   if (!medicationName || !dosage || !frequencyRaw || !stockRaw || !safetyRaw) {
     return { success: false, error: "Todos os campos são obrigatórios." };
@@ -338,6 +348,8 @@ export async function updateProtocolAction(
         frequency_interval_hours: parseInt(frequencyRaw, 10),
         stock_count: parseInt(stockRaw, 10),
         safety_threshold: parseInt(safetyRaw, 10),
+        next_due_at: nextDueAtStr ? new Date(nextDueAtStr).toISOString() : null,
+        assignee_id: assigneeId || null,
       }),
     });
 

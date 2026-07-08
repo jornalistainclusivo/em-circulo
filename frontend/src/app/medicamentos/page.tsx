@@ -79,6 +79,41 @@ export default async function MedicamentosPage() {
   const logsResult = await getMedicationLogsAction(activeRecipient.id);
   const logs = logsResult.success ? (logsResult.logs || []) : [];
 
+  interface CareGroupMemberResponse {
+    id: string;
+    care_group_id: string;
+    user_id: string;
+    role: string;
+    full_name: string;
+    email: string;
+  }
+
+  // 3. Fetch care group members
+  let groupMembers: import("@/types").CareGroupMember[] = [];
+  const userNamesMap: Record<string, string> = {};
+
+  try {
+    const membersRes = await fetch(`${API_BASE_URL}/api/v1/care-groups/${activeGroup.id}/members`, {
+      headers: { "Authorization": `Bearer ${token}` },
+      cache: "no-store"
+    });
+    if (membersRes.ok) {
+      const dbMembers = await membersRes.json() as CareGroupMemberResponse[];
+      groupMembers = dbMembers.map((m) => ({
+        id: m.id,
+        care_group_id: m.care_group_id,
+        user_id: m.user_id,
+        role: m.role as import("@/types").UserRole,
+        joined_at: new Date().toISOString() as import("@/types").ISODateString
+      }));
+      dbMembers.forEach((m) => {
+        userNamesMap[m.user_id] = m.full_name;
+      });
+    }
+  } catch (error) {
+    console.error("Erro ao carregar membros:", error);
+  }
+
   return (
     <article className={styles.container}>
       <header className={styles.pageHeader}>
@@ -93,6 +128,8 @@ export default async function MedicamentosPage() {
         recipientName={activeRecipient.name}
         protocols={protocols}
         logs={logs}
+        members={groupMembers}
+        userNames={userNamesMap}
         onLogMedication={logMedicationAction}
       />
     </article>

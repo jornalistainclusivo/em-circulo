@@ -117,6 +117,8 @@ class ProtocolCreate(BaseModel):
     frequency_interval_hours: int
     stock_count: int
     safety_threshold: int
+    next_due_at: Optional[datetime] = None
+    assignee_id: Optional[uuid.UUID] = None
 
 class MedicationProtocolResponse(BaseModel):
     id: uuid.UUID
@@ -126,6 +128,8 @@ class MedicationProtocolResponse(BaseModel):
     frequency_interval_hours: int
     stock_count: int
     safety_threshold: int
+    next_due_at: Optional[datetime]
+    assignee_id: Optional[uuid.UUID]
     created_at: datetime
     updated_at: datetime
 
@@ -180,6 +184,8 @@ class ProtocolUpdate(BaseModel):
     frequency_interval_hours: Optional[int] = None
     stock_count: Optional[int] = None
     safety_threshold: Optional[int] = None
+    next_due_at: Optional[datetime] = None
+    assignee_id: Optional[uuid.UUID] = None
 
 
 # ---------------------------------------------------------------------------

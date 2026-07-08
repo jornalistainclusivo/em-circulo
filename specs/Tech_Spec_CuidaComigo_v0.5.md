@@ -108,3 +108,16 @@ class NotificationResponse(BaseModel):
 - **IPv4 Explicit Rule:** A conexão das Server Actions via `fetch` requer a resolução explícita por `127.0.0.1` ao invés de `localhost` para evitar `ECONNREFUSED` imposto pelo stack Node 18+ em arquiteturas de proxy turbopack.
 - **Client Side Isolation:** O `NotificationBell` é um Client Component isolado na top-bar da `<Navigation />`. Ele gerencia a própria state-machine de polling (via `setInterval`) com cleanup robusto, independente do rest-rendering pipeline do Server Component.
 - **Micro-interações (Toast AAA):** Quando detectado um ID de notificação novo (`lastSeenIdRef !== newestId`), executa a chamada a `toast.info` do `sonner`. Clicks no badge navegam para `/notificacoes`.
+
+
+## 6. Fase 10.2: Fundação de Dados e Agendamento
+
+### 6.1. Modificações no Modelo de Dados (PostgreSQL / SQLModel)
+**Tabela:** `medication_protocols`
+- `next_due_at` (DateTime, indexado, opcional): Indica quando a próxima dose do medicamento deve ser tomada.
+- `assignee_id` (UUID, FK para `care_group_members.id`, opcional): Responsável pelo protocolo dentro do grupo.
+
+### 6.2. Regra de Negócio (Auto-Agendamento)
+- **Ação:** Endpoint `POST /api/v1/medications/{id}/logs`
+- **Condição:** Se o protocolo estiver vinculado a um `frequency_interval_hours` > 0.
+- **Lógica:** `next_due_at = administered_at + timedelta(hours=frequency_interval_hours)`. O protocolo é salvo no banco com o novo valor.
