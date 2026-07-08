@@ -13,7 +13,7 @@
  * Design System: Teal/Amber, prefers-reduced-motion respeitado via CSS
  */
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import {
   getNotificationsAction,
@@ -35,7 +35,6 @@ export function NotificationBell() {
   const [groupId, setGroupId] = useState<string | null>(null);
   const [unreadCount, setUnreadCount] = useState(0);
   const lastSeenIdRef = useRef<string | null>(null);
-  const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Step 1: Bootstrap groupId (runs once on mount)
   useEffect(() => {
@@ -44,47 +43,47 @@ export function NotificationBell() {
     });
   }, []);
 
-  // Step 2: Polling — runs whenever groupId becomes available
-  const fetchAndToast = useCallback(async () => {
-    if (!groupId) return;
-
-    const notifications = await getNotificationsAction(groupId, true);
-    setUnreadCount(notifications.length);
-
-    if (notifications.length === 0) return;
-
-    // Detect new notifications by comparing the newest ID with what we last saw
-    const newestId = notifications[0]?.id;
-    if (newestId && newestId !== lastSeenIdRef.current) {
-      // Only toast if we have a previous reference (not on first load)
-      if (lastSeenIdRef.current !== null) {
-        const n = notifications[0];
-        const icon = NOTIFICATION_ICONS[n.type] ?? "🔔";
-        toast.info(`${icon} ${n.title}`, {
-          description: n.message,
-          duration: 6000,
-        });
-      }
-      lastSeenIdRef.current = newestId;
-    }
-  }, [groupId]);
-
+  // Step 2: Polling loop
   useEffect(() => {
     if (!groupId) return;
 
-    // Wrap in async IIFE so setState is never called synchronously within the effect body
-    // (satisfies react-hooks/set-state-in-effect rule)
-    void (async () => { await fetchAndToast(); })();
+    async function fetchAndToast() {
+      try {
+        const notifications = await getNotificationsAction(groupId!, true);
+        setUnreadCount(notifications.length);
 
-    pollingRef.current = setInterval(
-      () => { void fetchAndToast(); },
-      POLL_INTERVAL_MS
-    );
+        if (notifications.length === 0) return;
+
+        const newestId = notifications[0]?.id;
+        if (newestId && newestId !== lastSeenIdRef.current) {
+          // Only toast if we have a previous reference (not on first load)
+          if (lastSeenIdRef.current !== null) {
+            const n = notifications[0];
+            const icon = NOTIFICATION_ICONS[n.type] ?? "🔔";
+            toast.info(`${icon} ${n.title}`, {
+              description: n.message,
+              duration: 6000,
+            });
+          }
+          lastSeenIdRef.current = newestId;
+        }
+      } catch (error) {
+        console.error("Failed to fetch notifications:", error);
+      }
+    }
+
+    // Initial fetch immediately on group load
+    void fetchAndToast();
+
+    // Setup interval for polling every 30 seconds
+    const intervalId = setInterval(() => {
+      void fetchAndToast();
+    }, POLL_INTERVAL_MS);
 
     return () => {
-      if (pollingRef.current) clearInterval(pollingRef.current);
+      clearInterval(intervalId);
     };
-  }, [groupId, fetchAndToast]);
+  }, [groupId]);
 
   // Don't render if not logged in (no groupId resolved)
   if (!groupId) return null;

@@ -58,14 +58,15 @@ export async function getMyGroupIdAction(): Promise<string | null> {
   if (!token) return null;
 
   try {
-    const res = await fetch("http://localhost:8000/api/v1/care-groups/mine", {
+    const res = await fetch("http://localhost:8000/api/v1/care-groups", {
       headers: { Authorization: `Bearer ${token}` },
       cache: "no-store",
     });
 
     if (!res.ok) return null;
     const data = await res.json();
-    return data?.id ?? null;
+    // API returns a list of care groups, we take the first one
+    return data && data.length > 0 ? data[0].id : null;
   } catch {
     return null;
   }
