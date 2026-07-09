@@ -48,3 +48,6 @@ out/
 
 # Agents
 .agents/
+
+# Documentos Internos (Raiz)
+mapa_funcionalidades.md
