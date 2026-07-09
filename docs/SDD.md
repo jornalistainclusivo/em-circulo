@@ -71,3 +71,8 @@ O backend possui um motor em background (`app/scheduler.py`).
 1. A cada 1 minuto, varre `MedicationProtocol` onde `next_due_at < now - 10 min`.
 2. Utiliza a coluna de trava (`last_delay_alert_sent_at`) para evitar envios duplicados na mesma janela de atraso.
 3. Insere alertas tipo `DOSE_ATRASADA` na tabela de `notifications`.
+
+### 4.3. Rotas da API Core
+As interações do frontend Server Actions utilizam endpoints REST assíncronos expostos pelo FastAPI:
+- `/api/v1/care-groups`: Gestão do círculo de cuidado e polling de notificações.
+- `/api/v1/tasks`: Criação, conclusão e atribuição de tarefas dentro do grupo.

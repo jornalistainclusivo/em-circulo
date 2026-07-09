@@ -24,7 +24,7 @@ except ImportError:
     logger.error("PyYAML is not installed. Please run 'pip install pyyaml'.")
     sys.exit(1)
 
-SPECS_DIR = Path("specs")
+SPECS_DIR = Path("docs")
 
 # Chaves exigidas no cabeçalho dos contratos
 REQUIRED_FRONTMATTER_KEYS: Set[str] = {"jinc-spec-version", "project-name", "status"}
@@ -78,6 +78,9 @@ def main() -> None:
     found_routes: Set[str] = set()
 
     for file_path in SPECS_DIR.rglob("*"):
+        if "archive" in file_path.parts:
+            continue
+        
         if file_path.suffix in [".md", ".yml", ".yaml"]:
             files_checked += 1
             logger.info(f"Analisando: {file_path.name}")
@@ -93,7 +96,9 @@ def main() -> None:
                     body = content
                 
                 # Validação de Frontmatter
-                if frontmatter:
+                if "openapi.yaml" in file_path.name:
+                    logger.info(f"[{file_path.name}] Ignorando frontmatter JINC para contrato OpenAPI raw.")
+                elif frontmatter:
                     if not validate_frontmatter(frontmatter, file_path):
                         has_errors = True
                 else:
@@ -118,7 +123,7 @@ def main() -> None:
                 has_errors = True
 
     if files_checked == 0:
-        logger.error("❌ Nenhum contrato YAML/Markdown encontrado no diretório specs.")
+        logger.error("❌ Nenhum contrato YAML/Markdown encontrado no diretório docs.")
         sys.exit(1)
 
     # Validação Global do PRD
