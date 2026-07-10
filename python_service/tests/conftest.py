@@ -57,9 +57,11 @@ async def setup_test_db():
     await sys_conn.execute(f"DROP DATABASE {TEST_DB_NAME}")
     await sys_conn.close()
 
+from sqlalchemy.pool import NullPool
+
 @pytest_asyncio.fixture(loop_scope="function")
 async def async_session():
-    engine = create_async_engine(TEST_DATABASE_URL, echo=True, future=True)
+    engine = create_async_engine(TEST_DATABASE_URL, echo=True, future=True, poolclass=NullPool)
     async_session_maker = sessionmaker(
         engine, class_=AsyncSession, expire_on_commit=False
     )
