@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { getDocuments } from "@/app/actions/documents";
 import { DocumentUploadForm } from "@/components/documents/DocumentUploadForm";
 import { DocumentList } from "@/components/documents/DocumentList";
+import type { CareGroup } from "@/types";
+import type { DocumentResponse } from "@/types/api";
 
 export const metadata = {
   title: "Arquivo Clínico | Cuida Comigo",
@@ -11,22 +13,33 @@ export const metadata = {
 export default async function ArquivoPage() {
   const cookieStore = await cookies();
   const token = cookieStore.get("cc_access_token")?.value;
-  const groupId = cookieStore.get("cc_current_group_id")?.value;
 
   if (!token) {
     redirect("/login");
   }
 
-  if (!groupId) {
-    return (
-      <div className="container" style={{ marginTop: "var(--space-8)" }}>
-        <h1>Arquivo de Documentos Clínicos</h1>
-        <p>Você precisa estar vinculado a um Grupo de Cuidado para acessar os documentos.</p>
-      </div>
-    );
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || process.env.API_BASE_URL || "http://127.0.0.1:8000";
+
+  let groups: CareGroup[] = [];
+  try {
+    const groupsRes = await fetch(`${API_BASE_URL}/api/v1/care-groups`, {
+      headers: { "Authorization": `Bearer ${token}` },
+      cache: "no-store"
+    });
+    if (groupsRes.ok) {
+      groups = await groupsRes.json();
+    }
+  } catch (error) {
+    console.error("Erro ao carregar círculos de cuidado:", error);
   }
 
-  let documents = [];
+  if (groups.length === 0) {
+    redirect("/onboarding");
+  }
+
+  const groupId = groups[0].id;
+
+  let documents: DocumentResponse[] = [];
   let error = null;
 
   try {

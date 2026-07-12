@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import { toast } from "sonner";
 import { createAppointmentAction } from "@/app/actions/appointments";
 import styles from "./CreateAppointmentForm.module.css";
@@ -24,7 +25,7 @@ export function CreateAppointmentForm({ groupId }: { groupId: string }) {
   const formRef = useRef<HTMLFormElement>(null);
   
   const createWithId = createAppointmentAction.bind(null, groupId);
-  const [state, formAction] = useFormState(createWithId, null);
+  const [state, formAction] = useActionState(createWithId, null);
 
   useEffect(() => {
     if (state) {
