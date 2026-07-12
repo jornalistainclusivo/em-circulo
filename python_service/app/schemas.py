@@ -232,3 +232,23 @@ class NotificationResponse(BaseModel):
     type: NotificationType
     is_read: bool
     created_at: datetime
+
+# ---------------------------------------------------------------------------
+# Agenda de Consultas — Fase v2.0
+# ---------------------------------------------------------------------------
+
+class AppointmentCreate(BaseModel):
+    title: str
+    scheduled_at: datetime
+    provider_name: Optional[str] = None
+    location: Optional[str] = None
+
+class AppointmentResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: uuid.UUID
+    care_recipient_id: uuid.UUID
+    title: str
+    scheduled_at: datetime
+    provider_name: Optional[str] = None
+    location: Optional[str] = None
+    created_at: datetime

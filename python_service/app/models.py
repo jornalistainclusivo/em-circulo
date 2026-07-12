@@ -100,6 +100,7 @@ class CareRecipient(SQLModel, table=True):
 
     care_group: CareGroup = Relationship(back_populates="recipients")
     protocols: List["MedicationProtocol"] = Relationship(back_populates="care_recipient")
+    appointments: List["Appointment"] = Relationship(back_populates="care_recipient")
 
 class Task(SQLModel, table=True):
     __tablename__ = "tasks"
@@ -172,3 +173,20 @@ class Notification(SQLModel, table=True):
     created_at: datetime = Field(sa_column=Column(DateTime(timezone=True), default=utc_now))
 
     care_group: CareGroup = Relationship(back_populates="notifications")
+
+# ---------------------------------------------------------------------------
+# Agenda de Consultas — Fase v2.0
+# ---------------------------------------------------------------------------
+
+class Appointment(SQLModel, table=True):
+    __tablename__ = "appointments"
+
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    care_recipient_id: uuid.UUID = Field(foreign_key="care_recipients.id", index=True)
+    title: str = Field(max_length=255)
+    scheduled_at: datetime = Field(sa_column=Column(DateTime(timezone=True), index=True))
+    provider_name: Optional[str] = Field(default=None, max_length=255)
+    location: Optional[str] = Field(default=None, max_length=500)
+    created_at: datetime = Field(sa_column=Column(DateTime(timezone=True), default=utc_now))
+
+    care_recipient: CareRecipient = Relationship(back_populates="appointments")
