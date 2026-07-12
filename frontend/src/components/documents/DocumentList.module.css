@@ -1,4 +1,4 @@
-.container {
+.card {
   background-color: var(--color-surface);
   padding: var(--space-6);
   border-radius: var(--radius-lg);
@@ -26,7 +26,7 @@
   padding: var(--space-4) 0;
 }
 
-.card {
+.documentItem {
   background-color: var(--color-surface);
   padding: var(--space-4);
   border-radius: var(--radius-lg);
@@ -38,7 +38,7 @@
 }
 
 @media (min-width: 640px) {
-  .card {
+  .documentItem {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;

@@ -57,7 +57,7 @@ export function DocumentUploadForm({ groupId }: DocumentUploadFormProps) {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.card}>
       <h2 className={styles.title}>Enviar Novo Documento</h2>
       <form ref={formRef} action={formAction} onSubmit={handleSubmit} className={styles.form} aria-label="Formulário de upload de documento">
         <div className={styles.formGroup}>
