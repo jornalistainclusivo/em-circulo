@@ -1,10 +1,10 @@
 ---
 name: sdd_cuida_comigo
-description: Software Design Document (v1.4.0)
+description: Software Design Document (v2.0 Draft)
 jinc-spec-version: "1.0.0"
 project-name: Cuida Comigo
 status: active
-last-updated: 2026-07-08
+last-updated: 2026-07-11
 prd-ref: docs/PRD.md
 ---
 
@@ -55,6 +55,7 @@ O núcleo do sistema orbita ao redor do `CareGroup` (Círculo de Cuidado).
 - `MedicationProtocol`: A espinha dorsal da medicação. Define `dosage` e `frequency_interval_hours`. Possui um gatilho mecânico `next_due_at` que avança a cada dose injetada.
 - `MedicationLog`: Log imutável da execução de uma dose por um cuidador no tempo.
 - `Notification`: Tabela de Event-Sourcing leve consumida periodicamente pelo frontend (Polling).
+- `Appointment`: Entidade para a Agenda de Consultas, atrelada por foreign key ao `CareRecipient`. Campos core da modelagem: `title` (título), `scheduled_at` (data/hora UTC), `provider_name` (especialista/médico) e `location` (local).
 
 ---
 
@@ -76,3 +77,6 @@ O backend possui um motor em background (`app/scheduler.py`).
 As interações do frontend Server Actions utilizam endpoints REST assíncronos expostos pelo FastAPI:
 - `/api/v1/care-groups`: Gestão do círculo de cuidado e polling de notificações.
 - `/api/v1/tasks`: Criação, conclusão e atribuição de tarefas dentro do grupo.
+
+### 4.4. Políticas de Acesso (RBAC) e Consultas
+Como regra arquitetural de Zero-Trust, **todo** endpoint da agenda (GET, POST, PATCH) deve obrigatoriamente cruzar o `care_group_id` fornecido na rota com a tabela `CareGroupMember` para validar se o `current_user` possui pertencimento ativo ao círculo. Nenhuma operação na tabela `Appointment` deve ocorrer sem essa validação prévia.
