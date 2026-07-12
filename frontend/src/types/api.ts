@@ -110,3 +110,25 @@ export interface AppointmentResponse {
   location: string | null;
   created_at: string;
 }
+
+// ── Documents Flow (v2.1) ──────────────────────────────────────────
+
+export interface DocumentCreate {
+  title: string;
+  document_type: "RECEITA" | "LAUDO" | "EXAME" | "OUTROS";
+}
+
+export interface DocumentResponse {
+  id: string;
+  care_recipient_id: string;
+  title: string;
+  document_type: "RECEITA" | "LAUDO" | "EXAME" | "OUTROS";
+  uploaded_at: string;
+  uploaded_by_id: string;
+}
+
+export interface PresignedUrlResponse {
+  url: string;
+  expires_in: number;
+}
+

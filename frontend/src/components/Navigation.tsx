@@ -64,6 +64,13 @@ export function Navigation({ isLoggedIn = false }: NavigationProps) {
           >
             Perfil
           </Link>
+          <Link
+            href="/arquivo"
+            className={styles.navLink}
+            aria-current={pathname === "/arquivo" ? "page" : undefined}
+          >
+            Arquivo
+          </Link>
           <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: "var(--space-4)" }}>
             <NotificationBell />
             <button
