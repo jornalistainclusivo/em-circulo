@@ -56,6 +56,7 @@ O núcleo do sistema orbita ao redor do `CareGroup` (Círculo de Cuidado).
 - `MedicationLog`: Log imutável da execução de uma dose por um cuidador no tempo.
 - `Notification`: Tabela de Event-Sourcing leve consumida periodicamente pelo frontend (Polling).
 - `Appointment`: Entidade para a Agenda de Consultas, atrelada por foreign key ao `CareRecipient`. Campos core da modelagem: `title` (título), `scheduled_at` (data/hora UTC), `provider_name` (especialista/médico) e `location` (local).
+- `ClinicalDocument`: Entidade para o Arquivo de Documentos Clínicos, atrelada ao `CareRecipient`. Contém metadados como título, tipo de documento (receita, laudo, exame) e data de upload.
 
 ---
 
@@ -80,3 +81,6 @@ As interações do frontend Server Actions utilizam endpoints REST assíncronos 
 
 ### 4.4. Políticas de Acesso (RBAC) e Consultas
 Como regra arquitetural de Zero-Trust, **todo** endpoint da agenda (GET, POST, PATCH) deve obrigatoriamente cruzar o `care_group_id` fornecido na rota com a tabela `CareGroupMember` para validar se o `current_user` possui pertencimento ativo ao círculo. Nenhuma operação na tabela `Appointment` deve ocorrer sem essa validação prévia.
+
+### 4.5. Estratégia de Armazenamento de Arquivos Clínicos (Storage)
+Adota-se um padrão 'S3-compatible' (AWS S3 para produção, MinIO para ambiente local/dev). O banco PostgreSQL armazenará apenas a URI do arquivo, nunca o binário (BLOB). Como premissa de Segurança Zero-Trust, os URLs gerados para download ou visualização deverão ser pré-assinados (Presigned URLs) com tempo de expiração curto, exigindo validação RBAC estrita de 'CareGroupMember' antes da geração do link.

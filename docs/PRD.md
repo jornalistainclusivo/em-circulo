@@ -24,7 +24,7 @@ O aplicativo deve proporcionar paz de espírito, evitando superdosagem de medica
 
 ---
 
-## 3. Escopo Funcional (Implementado até v1.4.0)
+## 3. Escopo Funcional (Implementado até v2.0.2)
 
 ### 3.1. Autenticação e Identidade
 - Cadastro de usuários com e-mail e senha (hash bcrypt).
@@ -51,12 +51,16 @@ O aplicativo deve proporcionar paz de espírito, evitando superdosagem de medica
 - Interface sincronizada via "HTTP Polling" e Toasts não-intrusivos.
 - Agendador autônomo (Cron Job) que identifica atrasos na medicação (passou de 10 min de atraso) e dispara uma notificação `DOSE_ATRASADA` com debounce para não flodar o grupo.
 
+### 3.6. Agenda de Consultas Integrada
+- Um calendário focado no paciente para agendar, lembrar e organizar idas a médicos e terapeutas.
+- Implementação estrita de acessibilidade (WCAG 2.2 AAA) com focus-visible e navegação linear.
+- Totalmente protegido via RBAC Zero-Trust.
+
 ---
 
-## 4. Escopo Funcional (Futuro / v2.0+)
+## 4. Escopo Funcional (Futuro / v2.1+)
 
 ### 4.1. Coordenação Avançada e Supervisão
-- **Agenda de Consultas Integrada:** Um calendário focado no paciente para agendar, lembrar e organizar idas a médicos e terapeutas.
 - **Arquivo de Documentos Clínicos:** Repositório seguro na nuvem para armazenar receitas médicas, laudos, exames e imagens.
 - **Relatório Semanal para a Família:** Geração de resumos automáticos (PDF/App) detalhando a evolução do paciente e a execução de tarefas para manter a rede de apoio informada.
 - **Telemedicina Simplificada:** Atalho para agendamento de consultas ou chamadas de vídeo rápidas com profissionais da saúde.
