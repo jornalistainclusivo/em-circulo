@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from app.routers import care_groups, tasks, protocols, care_recipients, invites, users, notifications, appointments, documents
