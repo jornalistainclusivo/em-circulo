@@ -17,20 +17,25 @@ export async function getDocuments(groupId: string): Promise<DocumentResponse[]>
 
   if (!token) throw new Error("Não autorizado");
 
-  const response = await fetch(`${API_BASE_URL}/api/v1/care-groups/${groupId}/documents`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store",
-  });
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/api/v1/care-groups/${groupId}/documents`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    });
 
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.detail || "Erro ao buscar documentos");
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.detail || "Erro ao buscar documentos");
+    }
+
+    return await response.json();
+  } catch (err: any) {
+    console.error("Erro em getDocuments:", err);
+    throw new Error("Falha de comunicação com o servidor. O backend pode estar offline.");
   }
-
-  return response.json();
 }
 
 export async function getPresignedUrl(groupId: string, documentId: string): Promise<PresignedUrlResponse> {
@@ -39,20 +44,25 @@ export async function getPresignedUrl(groupId: string, documentId: string): Prom
 
   if (!token) throw new Error("Não autorizado");
 
-  const response = await fetch(`${API_BASE_URL}/api/v1/care-groups/${groupId}/documents/${documentId}/download`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    cache: "no-store",
-  });
+  try {
+    const response = await fetch(`http://127.0.0.1:8000/api/v1/care-groups/${groupId}/documents/${documentId}/download`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    });
 
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.detail || "Erro ao gerar link de download");
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.detail || "Erro ao gerar link de download");
+    }
+
+    return await response.json();
+  } catch (err: any) {
+    console.error("Erro em getPresignedUrl:", err);
+    throw new Error("Falha de comunicação com o servidor. O backend pode estar offline.");
   }
-
-  return response.json();
 }
 
 export async function uploadDocumentAction(
@@ -68,7 +78,7 @@ export async function uploadDocumentAction(
   }
 
   try {
-    const response = await fetch(`${API_BASE_URL}/api/v1/care-groups/${groupId}/documents`, {
+    const response = await fetch(`http://127.0.0.1:8000/api/v1/care-groups/${groupId}/documents`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -89,6 +99,6 @@ export async function uploadDocumentAction(
     return { success: true, message: "Documento enviado com sucesso!" };
   } catch (err) {
     console.error("Erro ao enviar documento:", err);
-    return { success: false, error: "Erro de comunicação com o servidor." };
+    return { success: false, error: "Falha de comunicação com o servidor. O backend pode estar offline." };
   }
 }
