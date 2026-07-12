@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getDocuments } from "@/app/actions/documents";
 import DocumentUploadForm from "@/components/documents/DocumentUploadForm";
 import DocumentList from "@/components/documents/DocumentList";
+import styles from "@/app/page.module.css";
 import type { CareGroup } from "@/types";
 import type { DocumentResponse } from "@/types/api";
 
@@ -50,12 +51,10 @@ export default async function ArquivoPage() {
   }
 
   return (
-    <div className="container" style={{ marginTop: "var(--space-8)" }}>
-      <header style={{ marginBottom: "var(--space-6)" }}>
-        <h1 style={{ fontSize: "var(--font-size-2xl)", color: "var(--color-text-primary)" }}>
-          Arquivo de Documentos Clínicos
-        </h1>
-        <p style={{ color: "var(--color-text-secondary)" }}>
+    <article className={styles.dashboard}>
+      <header className={styles.pageHeader}>
+        <h1>Arquivo de Documentos Clínicos</h1>
+        <p>
           Armazene receitas, laudos, exames e outros documentos médicos.
         </p>
       </header>
@@ -73,6 +72,6 @@ export default async function ArquivoPage() {
       <section>
         <DocumentList groupId={groupId} documents={documents} />
       </section>
-    </div>
+    </article>
   );
 }
