@@ -51,6 +51,13 @@ export function Navigation({ isLoggedIn = false }: NavigationProps) {
             Farmácia
           </Link>
           <Link
+            href="/agenda"
+            className={styles.navLink}
+            aria-current={pathname === "/agenda" ? "page" : undefined}
+          >
+            Agenda
+          </Link>
+          <Link
             href="/perfil"
             className={styles.navLink}
             aria-current={pathname === "/perfil" ? "page" : undefined}

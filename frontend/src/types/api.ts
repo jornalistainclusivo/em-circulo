@@ -91,3 +91,22 @@ export interface CreateCareGroupResponse {
 export interface ApiErrorResponse {
   detail: string;
 }
+
+// ── Appointments Flow (v2.0) ──────────────────────────────────────────
+
+export interface AppointmentCreate {
+  title: string;
+  scheduled_at: string; // ISODateString
+  provider_name?: string;
+  location?: string;
+}
+
+export interface AppointmentResponse {
+  id: string;
+  care_recipient_id: string;
+  title: string;
+  scheduled_at: string;
+  provider_name: string | null;
+  location: string | null;
+  created_at: string;
+}

@@ -25,4 +25,6 @@ export type {
   CreateCareGroupRequest,
   CreateCareGroupResponse,
   ApiErrorResponse,
+  AppointmentCreate,
+  AppointmentResponse,
 } from "./api";
