@@ -78,20 +78,19 @@ export async function uploadDocumentAction(
   }
 
   try {
-    const apiFormData = new FormData();
-    apiFormData.append("title", formData.get("title") as string);
-    apiFormData.append("document_type", formData.get("document_type") as string);
-    apiFormData.append("file", formData.get("file") as File);
-
     const response = await fetch(`http://127.0.0.1:8000/api/v1/care-groups/${groupId}/documents`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: apiFormData,
+      // FormData is passed directly; Next.js fetch polyfill handles multipart/form-data boundary
+      body: formData,
     });
 
     const data = await response.json().catch(() => ({}));
+    
+    console.log("[UPLOAD DEBUG] HTTP Status do Python:", response.status);
+    console.log("[UPLOAD DEBUG] Resposta do Python:", data);
 
     if (!response.ok) {
       return {
