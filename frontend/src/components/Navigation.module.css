@@ -34,8 +34,16 @@
 
 .nav {
   display: flex;
-  gap: var(--space-6);
+  gap: var(--space-4);
   padding: 0 var(--space-6);
+  align-items: center;
+}
+
+.navLinks {
+  display: flex;
+  gap: var(--space-6);
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 .navLink {

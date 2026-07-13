@@ -29,49 +29,51 @@ export function Navigation({ isLoggedIn = false }: NavigationProps) {
             height={32}
             style={{ height: "32px", width: "auto" }}
           />
-          <strong className={styles.brandName}>Em Círculo</strong>
+          <strong className={styles.brandName}>em círculo</strong>
         </div>
         <p className={styles.slogan}>A rede de apoio para quem cuida</p>
       </div>
 
       {showNav && (
         <nav aria-label="Navegação principal" className={styles.nav}>
-          <Link
-            href="/"
-            className={styles.navLink}
-            aria-current={pathname === "/" ? "page" : undefined}
-          >
-            Painel
-          </Link>
-          <Link
-            href="/medicamentos"
-            className={styles.navLink}
-            aria-current={pathname === "/medicamentos" ? "page" : undefined}
-          >
-            Farmácia
-          </Link>
-          <Link
-            href="/agenda"
-            className={styles.navLink}
-            aria-current={pathname === "/agenda" ? "page" : undefined}
-          >
-            Agenda
-          </Link>
-          <Link
-            href="/perfil"
-            className={styles.navLink}
-            aria-current={pathname === "/perfil" ? "page" : undefined}
-          >
-            Perfil
-          </Link>
-          <Link
-            href="/arquivo"
-            className={styles.navLink}
-            aria-current={pathname === "/arquivo" ? "page" : undefined}
-          >
-            Arquivo
-          </Link>
-          <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: "var(--space-4)" }}>
+          <div className={styles.navLinks}>
+            <Link
+              href="/"
+              className={styles.navLink}
+              aria-current={pathname === "/" ? "page" : undefined}
+            >
+              Painel
+            </Link>
+            <Link
+              href="/medicamentos"
+              className={styles.navLink}
+              aria-current={pathname === "/medicamentos" ? "page" : undefined}
+            >
+              Farmácia
+            </Link>
+            <Link
+              href="/agenda"
+              className={styles.navLink}
+              aria-current={pathname === "/agenda" ? "page" : undefined}
+            >
+              Agenda
+            </Link>
+            <Link
+              href="/perfil"
+              className={styles.navLink}
+              aria-current={pathname === "/perfil" ? "page" : undefined}
+            >
+              Perfil
+            </Link>
+            <Link
+              href="/arquivo"
+              className={styles.navLink}
+              aria-current={pathname === "/arquivo" ? "page" : undefined}
+            >
+              Arquivo
+            </Link>
+          </div>
+          <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: "var(--space-4)", flexShrink: 0 }}>
             <NotificationBell />
             <button
               onClick={() => logoutAction()}
