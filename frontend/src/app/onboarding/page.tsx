@@ -3,7 +3,7 @@ import styles from "./onboarding.module.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Onboarding — Cuida Comigo",
+  title: "Onboarding — Em Círculo",
   description: "Configure seu círculo de cuidado e cadastre a pessoa assistida para iniciar.",
 };
 

@@ -34,7 +34,7 @@ export function AuthCard({ invite }: AuthCardProps) {
   return (
     <div className={styles.card}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Cuida Comigo</h1>
+        <h1 className={styles.title}>Em Círculo</h1>
         <p className={styles.subtitle}>
           {activeTab === "login"
             ? "Gestão compartilhada de cuidado familiar"

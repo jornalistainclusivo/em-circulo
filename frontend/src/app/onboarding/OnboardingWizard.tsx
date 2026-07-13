@@ -30,7 +30,7 @@ export function OnboardingWizard({ initialStep = 1, initialCareGroupId = "" }: O
   return (
     <div className={styles.card}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Bem-vindo ao Cuida Comigo</h1>
+        <h1 className={styles.title}>Bem-vindo ao Em Círculo</h1>
         <p className={styles.subtitle}>
           {step === 1
             ? "Vamos começar configurando seu Círculo de Cuidado"

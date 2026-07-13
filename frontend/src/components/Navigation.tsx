@@ -24,14 +24,14 @@ export function Navigation({ isLoggedIn = false }: NavigationProps) {
         <div className={styles.brand}>
           <Image
             src="/logo.png"
-            alt="Logo Cuida Comigo"
+            alt="Logo Em Círculo"
             width={32}
             height={32}
             style={{ height: "32px", width: "auto" }}
           />
-          <strong className={styles.brandName}>Cuida Comigo</strong>
+          <strong className={styles.brandName}>Em Círculo</strong>
         </div>
-        <p className={styles.slogan}>Ninguém precisa cuidar sozinho</p>
+        <p className={styles.slogan}>A rede de apoio para quem cuida</p>
       </div>
 
       {showNav && (

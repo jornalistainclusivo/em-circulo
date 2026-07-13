@@ -34,7 +34,7 @@ export default async function InvitePage({ params }: InvitePageProps) {
     <div className={styles.container}>
       <div className={styles.card}>
         <header className={styles.header}>
-          <h1 className={styles.title}>Cuida Comigo</h1>
+          <h1 className={styles.title}>Em Círculo</h1>
           <p className={styles.subtitle}>Convite para Círculo de Cuidado</p>
         </header>
 

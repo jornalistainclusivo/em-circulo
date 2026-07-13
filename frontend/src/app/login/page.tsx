@@ -3,7 +3,7 @@ import styles from "./login.module.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Acesso — Cuida Comigo",
+  title: "Acesso — Em Círculo",
   description: "Faça login ou crie sua conta para gerenciar e compartilhar o cuidado.",
 };
 

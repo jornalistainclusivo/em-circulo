@@ -7,7 +7,7 @@ import type { CareGroup } from "@/types";
 import type { DocumentResponse } from "@/types/api";
 
 export const metadata = {
-  title: "Arquivo Clínico | Cuida Comigo",
+  title: "Arquivo Clínico | Em Círculo",
 };
 
 export default async function ArquivoPage() {

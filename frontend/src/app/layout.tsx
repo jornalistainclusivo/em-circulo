@@ -6,15 +6,15 @@ import { Navigation } from "@/components/Navigation";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Cuida Comigo",
+  title: "Em Círculo",
   description:
-    "Ninguém precisa cuidar sozinho. Plataforma de gestão compartilhada para cuidadores informais.",
+    "A rede de apoio para quem cuida.",
   manifest: "/manifest.json",
-  applicationName: "Cuida Comigo",
+  applicationName: "Em Círculo",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Cuida Comigo",
+    title: "Em Círculo",
   },
 };
 
@@ -50,7 +50,7 @@ export default async function RootLayout({
         <footer>
           <p>
             <small>
-              © {new Date().getFullYear()} Cuida Comigo — JINC Apps
+              © {new Date().getFullYear()} Em Círculo — JINC Apps
             </small>
           </p>
         </footer>
