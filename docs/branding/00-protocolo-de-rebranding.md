@@ -5,6 +5,8 @@ status: Draft
 last_updated: 2026-07-12
 owner: JINC Apps
 project: Em Círculo
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Protocolo de Rebranding
@@ -26,6 +28,8 @@ O objetivo do rebranding é alinhar a marca ao posicionamento estratégico do pr
 
 > **Observação:** O slogan **"Ninguém Precisa Cuidar Sozinho."** deixa de ser a assinatura principal e passa a representar o propósito institucional da marca, podendo ser utilizado em campanhas, apresentações e materiais institucionais.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Objetivo
@@ -52,6 +56,8 @@ Os principais fundamentos da mudança são:
 - **Escalabilidade:** a marca suporta futuras funcionalidades sem restringir sua percepção ao verbo "cuidar".
 - **Coerência com o domínio:** o conceito de **Círculo de Cuidado (CareGroup)** já faz parte da arquitetura funcional do produto.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Posicionamento
@@ -72,6 +78,8 @@ A plataforma conecta familiares, cuidadores, voluntários e profissionais em um 
 | **Personalidade** | Humana, confiável, acolhedora, organizada e acessível. |
 | **Valores** | Colaboração, confiança, autonomia, acessibilidade, empatia e segurança. |
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Mensagens-Chave
@@ -100,6 +108,8 @@ A comunicação da marca deve reforçar continuamente os seguintes conceitos:
 
 A tecnologia deixa de ser apresentada como uma ferramenta individual e passa a representar uma infraestrutura de colaboração entre pessoas.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Benefícios da Nova Marca
@@ -155,6 +165,8 @@ A comunicação da mudança deve enfatizar que:
 
 O que muda é a forma como a marca representa essa missão.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Critérios de Sucesso

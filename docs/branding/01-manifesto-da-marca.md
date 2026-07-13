@@ -5,6 +5,8 @@ status: Draft
 last_updated: 2026-07-12
 owner: JINC Apps
 project: Em Círculo
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Manifesto da Marca
@@ -37,6 +39,8 @@ Essa pessoa costuma ser chamada apenas de cuidador.
 
 Nós a chamamos de protagonista invisível.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # O Problema
@@ -75,6 +79,8 @@ Porque cuidar melhor não significa fazer mais.
 
 Significa cuidar juntos.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Nossa Missão
@@ -99,6 +105,8 @@ Prometemos reduzir a carga mental de quem assume a responsabilidade pelo cuidado
 
 Prometemos criar um ambiente onde todos saibam como ajudar.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Nossa Visão
@@ -125,6 +133,8 @@ Porque todos já sabem.
 
 Nenhuma pessoa deveria assumir sozinha uma responsabilidade que pertence a uma rede inteira.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Pessoas vêm antes da tecnologia.
@@ -139,6 +149,8 @@ Nunca para substituí-las.
 
 Quanto mais clara é a informação, menor é a ansiedade de quem cuida.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Compartilhar é proteger.
@@ -159,6 +171,8 @@ A inclusão não é um diferencial.
 
 É um requisito.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Confiança se constrói em cada detalhe.
@@ -193,6 +207,8 @@ Existe uma rede onde cada pessoa contribui conforme sua disponibilidade e capaci
 
 É nesse espaço de confiança que o cuidado acontece.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Nossa Voz
@@ -237,6 +253,8 @@ Deve responder à mesma pergunta:
 
 Se a resposta for sim, estamos no caminho certo.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Nossa Assinatura

@@ -5,6 +5,8 @@ status: Draft
 last_updated: 2026-07-13
 owner: JINC Apps
 project: Em Círculo
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Plano de Migração: De "Cuida Comigo" para "Em Círculo"

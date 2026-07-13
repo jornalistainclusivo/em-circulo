@@ -5,6 +5,8 @@ status: Draft
 last_updated: 2026-07-12
 owner: JINC Apps
 project: Em Círculo
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Território Semântico
@@ -31,6 +33,8 @@ A tecnologia é um meio.
 
 As pessoas são o centro.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Território Principal
@@ -79,6 +83,8 @@ Palavras relacionadas:
 * agenda
 * histórico
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Tranquilidade
@@ -109,6 +115,8 @@ Palavras relacionadas:
 * participar
 * contribuir
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Colaboração
@@ -142,6 +150,8 @@ Estas palavras devem aparecer frequentemente na comunicação.
 * organização
 * presença
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Prioridade Média
@@ -166,6 +176,8 @@ Estas palavras devem aparecer frequentemente na comunicação.
 * transparência
 * tecnologia
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Linguagem Preferencial
@@ -210,6 +222,8 @@ Evite utilizar como eixo principal:
 
 Esses termos podem aparecer quando necessários, mas nunca devem representar a essência da marca.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Metáforas da Marca
@@ -243,6 +257,8 @@ A comunicação pode utilizar metáforas que reforcem a ideia de colaboração.
 
 Essas metáforas reforçam a sobrecarga individual, justamente aquilo que a marca pretende reduzir.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Conceitos Fundamentais
@@ -259,6 +275,8 @@ Você faz parte de um Círculo.
 
 Você não está sozinho.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Organização
@@ -271,6 +289,8 @@ Todos sabem o que precisa ser feito.
 
 Todos compartilham a mesma informação.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Campos Semânticos
@@ -295,6 +315,8 @@ Todos compartilham a mesma informação.
 * acolher
 * organizar
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Comunidade
@@ -317,6 +339,8 @@ Todos compartilham a mesma informação.
 * integrada
 * confiável
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Nome das Funcionalidades
@@ -349,6 +373,8 @@ Ao criar novas funcionalidades, telas ou serviços, os nomes devem atender aos s
 
 Sempre que houver dúvida, prefira palavras simples.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Teste de Consistência

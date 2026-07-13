@@ -1,3 +1,10 @@
+---
+name: spec
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
+status: draft
+---
+
 # Spec: Arquivo de Documentos Clínicos (v2.1)
 
 ## 1. Visão Geral

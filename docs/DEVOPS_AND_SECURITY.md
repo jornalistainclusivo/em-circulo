@@ -1,3 +1,10 @@
+---
+name: DEVOPS_AND_SECURITY
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
+status: draft
+---
+
 # Protocolos de DevOps e Segurança
 
 > Este documento alinha a infraestrutura com a abordagem Híbrida e Zero-Trust definida pelo JINC Protocol.

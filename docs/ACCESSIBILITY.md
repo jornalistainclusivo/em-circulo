@@ -1,3 +1,10 @@
+---
+name: ACCESSIBILITY
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
+status: draft
+---
+
 # Diretrizes de Acessibilidade (JINC Protocol)
 
 > "Acessibilidade é inegociável". A plataforma Cuida Comigo deve suportar uma arquitetura de inclusão universal, em conformidade estrita com o WCAG 2.2 AAA.

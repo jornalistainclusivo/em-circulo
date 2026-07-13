@@ -5,6 +5,8 @@ status: Draft
 last_updated: 2026-07-12
 owner: JINC Apps
 project: Em Círculo
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Personalidade e Tom de Voz
@@ -42,6 +44,8 @@ Sua personalidade deve transmitir confiança, organização e acolhimento sem so
 * Respeitosos
 * Colaborativos
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Não Somos
@@ -68,6 +72,8 @@ A marca existe para proteger, apoiar e facilitar a vida das pessoas.
 
 Seu objetivo não é assumir o protagonismo, mas permitir que outras pessoas cuidem melhor.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Arquétipo Secundário
@@ -110,6 +116,8 @@ Sempre preferimos palavras simples.
 
 > Registro de medicamentos.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## 2. Empatia
@@ -135,6 +143,8 @@ Cada mensagem deve informar claramente:
 * quando;
 * por quem.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## 4. Positividade
@@ -163,6 +173,8 @@ Isso inclui:
 * pessoas com deficiência;
 * usuários de tecnologias assistivas.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Tom de Voz
@@ -195,6 +207,8 @@ Exemplo:
 
 > Convide familiares e cuidadores para compartilhar responsabilidades.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Quando lembramos algo
@@ -223,6 +237,8 @@ Exemplo:
 
 > O estoque deste medicamento está terminando.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Quando ocorre um erro
@@ -261,6 +277,8 @@ Exemplo:
 
 > Obrigado por fazer parte desta rede de apoio.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Linguagem
@@ -292,6 +310,8 @@ Exemplo:
 * falha humana
 * responsável único
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Microcopy
@@ -312,6 +332,8 @@ A experiência da Em Círculo deve ser construída por pequenas mensagens claras
 
 ❌ Delegar tarefa.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Medicamentos
@@ -328,6 +350,8 @@ A experiência da Em Círculo deve ser construída por pequenas mensagens claras
 
 ❌ Evento programado iniciado.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Estoque
@@ -348,6 +372,8 @@ Sempre que possível:
 * utilize voz ativa;
 * explique antes de orientar.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Diretrizes para IA e Notificações
@@ -381,6 +407,8 @@ A tecnologia deve transmitir organização.
 
 A linguagem deve transmitir presença.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Checklist Editorial

@@ -5,6 +5,8 @@ status: Draft
 last_updated: 2026-07-12
 owner: JINC Apps
 project: Em Círculo
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Identidade Visual
@@ -31,6 +33,8 @@ A identidade da Em Círculo é construída sobre cinco conceitos fundamentais:
 
 A linguagem gráfica deve transmitir proximidade entre pessoas, evitando elementos associados ao ambiente hospitalar.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Personalidade Visual
@@ -70,6 +74,8 @@ O logotipo representa estabilidade e simplicidade.
 
 A assinatura reforça o posicionamento da marca.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Assinatura Institucional
@@ -97,6 +103,8 @@ Sua leitura deve funcionar tanto em tamanhos reduzidos quanto em aplicações am
 
 O símbolo nunca deve depender exclusivamente de cor para transmitir significado.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Área de Proteção
@@ -120,6 +128,8 @@ Nenhum elemento gráfico ou textual pode invadir essa área.
 
 Abaixo desses limites deve ser utilizada apenas a versão simplificada do símbolo.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Paleta de Cores
@@ -150,6 +160,8 @@ Representa:
 * cuidado humano;
 * colaboração.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Cor de Apoio
@@ -183,6 +195,8 @@ Neutral-900
 
 As cores institucionais devem atuar como elementos de destaque, nunca como plano dominante.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Acessibilidade das Cores
@@ -219,6 +233,8 @@ Exemplos:
 * Source Sans
 * Noto Sans
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Ícones
@@ -252,6 +268,8 @@ As ilustrações devem representar:
 
 A comunicação visual deve refletir diferentes configurações familiares brasileiras.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Fotografia
@@ -291,6 +309,8 @@ Os componentes devem compartilhar:
 * mesmos espaçamentos;
 * mesmos estados de interação.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Estados Visuais
@@ -307,6 +327,8 @@ Comunica conclusão de uma ação.
 
 Comunica orientação.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Atenção
@@ -321,6 +343,8 @@ Comunica impossibilidade temporária ou inconsistência.
 
 O erro nunca deve gerar culpa.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Movimento
@@ -346,6 +370,8 @@ A identidade visual deve permanecer consistente em:
 * documentos institucionais;
 * materiais para parceiros.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # O que Nunca Fazer
@@ -373,6 +399,8 @@ Antes da publicação, verifique:
 * A aplicação está consistente com o Design System?
 * A marca permanece reconhecível em tamanhos reduzidos?
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Resumo

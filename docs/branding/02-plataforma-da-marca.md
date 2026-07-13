@@ -5,6 +5,8 @@ status: Draft
 last_updated: 2026-07-12
 owner: JINC Apps
 project: Em Círculo
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Plataforma da Marca
@@ -27,6 +29,8 @@ Este documento é a principal referência para garantir consistência entre estr
 
 A Em Círculo existe para transformar o cuidado em uma responsabilidade compartilhada.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Missão
@@ -39,6 +43,8 @@ Organizar redes de apoio para que familiares, cuidadores e profissionais possam 
 
 Ser a principal plataforma brasileira de coordenação do cuidado, fortalecendo redes de apoio e reduzindo a sobrecarga dos cuidadores.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Promessa da Marca
@@ -66,6 +72,8 @@ Não somos:
 
 Somos uma plataforma que conecta pessoas para cuidar juntas.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Proposta de Valor
@@ -91,6 +99,8 @@ A Em Círculo reduz a carga mental do cuidador principal ao centralizar informa�
 * instituições;
 * equipes multidisciplinares.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Problema que Resolvemos
@@ -118,6 +128,8 @@ Nosso foco não é apenas a pessoa cuidada.
 
 Nosso foco é quem cuida.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Pilares Estratégicos
@@ -132,6 +144,8 @@ O cuidado é uma responsabilidade compartilhada.
 
 Informação organizada reduz ansiedade.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Confiança
@@ -146,6 +160,8 @@ Cada ação é registrada.
 
 Cada responsabilidade é clara.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Acessibilidade
@@ -167,6 +183,8 @@ Sem exceções.
 * Confiança
 * Respeito
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Personalidade
@@ -201,6 +219,8 @@ Apoia.
 
 Facilita.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Secundário
@@ -230,6 +250,8 @@ As principais ideias associadas à marca são:
 * pertencimento;
 * cuidado compartilhado.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Posicionamento Verbal
@@ -244,6 +266,8 @@ As principais ideias associadas à marca são:
 
 **A rede de apoio para quem cuida.**
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Propósito Institucional
@@ -266,6 +290,8 @@ O produto deve reduzir a carga mental do cuidado.
 
 Nunca aumentá-la.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Princípio Norteador
@@ -290,6 +316,8 @@ Se a resposta for negativa, a decisão deve ser reavaliada.
 | **Nosso diferencial** | Organizamos pessoas, não apenas tarefas.                    |
 | **Nosso objetivo**    | Tornar o cuidado uma experiência compartilhada.             |
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Declaração da Marca

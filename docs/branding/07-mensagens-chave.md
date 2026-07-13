@@ -5,6 +5,8 @@ status: Draft
 last_updated: 2026-07-12
 owner: JINC Apps
 project: Em Círculo
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Mensagens-Chave
@@ -29,6 +31,8 @@ Ela comunica, de forma simples e direta, o posicionamento da Em Círculo.
 
 Toda comunicação deve reforçar essa ideia.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Propósito Institucional
@@ -49,6 +53,8 @@ Ela deve aparecer em contextos institucionais, apresentações, campanhas e cont
 
 A Em Círculo ajuda famílias, cuidadores e pessoas de apoio a organizarem tarefas, medicamentos e informações em um único lugar, tornando o cuidado mais seguro, colaborativo e tranquilo.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Mensagem de Posicionamento
@@ -75,6 +81,8 @@ Cuidar é uma responsabilidade compartilhada.
 * O cuidado acontece em equipe.
 * Um Círculo forte começa com pessoas conectadas.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Organização
@@ -107,6 +115,8 @@ Todos acessam a mesma informação.
 * Menos incertezas.
 * Mais confiança.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Tranquilidade
@@ -131,6 +141,8 @@ Reduzimos a carga mental de quem cuida.
 
 A Em Círculo ajuda sua família a cuidar junta.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Cuidador Principal
@@ -145,6 +157,8 @@ Mas não precisa carregar todas as responsabilidades sozinho.
 
 Trabalhe em conjunto com a família utilizando informações organizadas e atualizadas.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Pessoas de Apoio
@@ -161,6 +175,8 @@ Mesmo participando ocasionalmente, você pode contribuir de forma organizada.
 
 > Cuidar fica melhor quando é compartilhado.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Cadastro
@@ -173,6 +189,8 @@ Mesmo participando ocasionalmente, você pode contribuir de forma organizada.
 
 > Convide familiares e pessoas de confiança.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Primeira Tarefa
@@ -185,6 +203,8 @@ Mesmo participando ocasionalmente, você pode contribuir de forma organizada.
 
 > Registre medicamentos com segurança.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Uso Contínuo
@@ -199,6 +219,8 @@ Mesmo participando ocasionalmente, você pode contribuir de forma organizada.
 
 A Em Círculo conecta pessoas para transformar o cuidado em uma experiência colaborativa.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Sobre a Tecnologia
@@ -213,6 +235,8 @@ As pessoas cuidam.
 
 Nosso propósito é reduzir a sobrecarga de quem cuida por meio da organização da rede de apoio.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Mensagens para Website
@@ -237,6 +261,8 @@ Organize familiares, cuidadores e pessoas de apoio em uma única plataforma.
 * Reduza a sobrecarga.
 * Cuide com mais tranquilidade.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Mensagens para App Stores
@@ -251,6 +277,8 @@ A rede de apoio para quem cuida.
 
 Organize tarefas, medicamentos e informações com familiares e cuidadores em uma única plataforma.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Mensagens para Notificações
@@ -269,6 +297,8 @@ Organize tarefas, medicamentos e informações com familiares e cuidadores em um
 * Há uma tarefa aguardando responsável.
 * Um convite ainda não foi aceito.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Atenção
@@ -288,6 +318,8 @@ Temas recorrentes:
 * pequenas ações fazem diferença;
 * famílias conectadas cuidam melhor.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Mensagens para Parceiros
@@ -309,6 +341,8 @@ A marca pode utilizar, alternadamente, frases como:
 * Menos sobrecarga. Mais presença.
 * Cuidar juntos transforma vidas.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Mensagens que Devemos Evitar
@@ -344,6 +378,8 @@ Antes de publicar qualquer comunicação, pergunte:
 
 Se alguma resposta for negativa, a mensagem deve ser revisada.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Resumo

@@ -5,6 +5,8 @@ status: Draft
 last_updated: 2026-07-12
 owner: JINC Apps
 project: Em Círculo
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Arquitetura da Marca
@@ -39,6 +41,8 @@ Exemplos:
 
 A identidade visual, linguagem e experiência permanecem unificadas.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Estrutura Hierárquica
@@ -92,6 +96,8 @@ A marca principal representa:
 
 Nenhuma funcionalidade deve competir com a marca principal.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Organização do Produto
@@ -116,6 +122,8 @@ As funcionalidades existem para fortalecer esse Círculo.
 
 Representa todo o ecossistema.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Nível 2
@@ -146,6 +154,8 @@ Esses recursos não possuem identidade própria.
 
 São componentes do Círculo.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Arquitetura de Navegação
@@ -184,6 +194,8 @@ Possíveis evoluções:
 * Recomendações Inteligentes
 * Planejamento Automático
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Saúde
@@ -201,6 +213,8 @@ Possíveis evoluções:
 * Rede Solidária
 * Voluntariado
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Mercado
@@ -226,6 +240,8 @@ A comunicação também deve seguir a arquitetura da marca.
 
 > Seu Círculo recebeu uma nova atividade.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Evite
@@ -255,6 +271,8 @@ Sempre utilizar nomes simples.
 
 Os nomes públicos devem refletir linguagem natural.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Arquitetura Visual
@@ -282,6 +300,8 @@ A plataforma organiza quatro grandes dimensões.
 
 Quem faz parte do Círculo.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Organização
@@ -294,6 +314,8 @@ O que precisa ser feito.
 
 O que todos precisam saber.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Colaboração
@@ -316,6 +338,8 @@ Uma nova funcionalidade só deve ser criada se responder positivamente às segui
 
 Caso contrário, sua inclusão deve ser reavaliada.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Governança da Marca

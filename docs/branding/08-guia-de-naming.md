@@ -6,9 +6,10 @@ last_updated: 2026-07-12
 owner: JINC Apps
 project: Em Círculo
 references:
-
-* Guia de Identidade Visual e Naming — ABA (Associação Brasileira de Anunciantes)
-* Naming: Como criar o nome certo para sua empresa — Bradda Branding
+  - "Guia de Identidade Visual e Naming — ABA (Associação Brasileira de Anunciantes)"
+  - "Naming: Como criar o nome certo para sua empresa — Bradda Branding"
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Guia de Naming
@@ -34,6 +35,8 @@ Todo nome criado para a Em Círculo deve:
 * transmitir colaboração e confiança;
 * favorecer a expansão futura do produto.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Princípios de Naming
@@ -77,6 +80,8 @@ Exemplos:
 * Avisos
 * Arquivos
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## 3. Naturalidade
@@ -95,6 +100,8 @@ A plataforma organiza relações.
 
 Não processos.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## 5. Escalabilidade
@@ -123,6 +130,8 @@ Nunca deve transmitir:
 * autoridade;
 * excesso de tecnologia.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Critérios de Avaliação
@@ -154,6 +163,8 @@ Responder:
 * Quem utilizará esse nome?
 * Em qual contexto?
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Etapa 2 — Levantar o território semântico
@@ -190,6 +201,8 @@ Misturar:
 * expressões;
 * construções inéditas.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Etapa 4 — Filtrar
@@ -218,6 +231,8 @@ Nenhum nome deve ser aprovado apenas por disponibilidade jurídica.
 
 A estratégia da marca continua sendo o principal critério.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Tipos de Nome
@@ -260,6 +275,8 @@ Desvantagem:
 
 Exigem maior investimento em posicionamento.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 ## Metafóricos
@@ -291,6 +308,8 @@ Sempre utilizar nomes simples.
 | Notifications       | Avisos       |
 | Documents           | Arquivos     |
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Convenções para Novos Produtos
@@ -322,6 +341,8 @@ A marca privilegia palavras relacionadas a:
 * pertencimento;
 * cuidado compartilhado.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Palavras a Evitar
@@ -365,6 +386,8 @@ Antes de oficializar um novo nome, confirme:
 
 Se alguma resposta for negativa, o processo deve retornar às etapas anteriores.
 
+jinc-spec-version: "1.0.0"
+project-name: Em Círculo
 ---
 
 # Governança
