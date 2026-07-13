@@ -2,7 +2,7 @@
 name: spec_notificacoes_e_cron
 description: Especificação Técnica do Motor de Notificações Inteligentes e Escalonamento (Cron)
 jinc-spec-version: "1.0.0"
-project-name: Cuida Comigo
+project-name: Em Círculo
 feature-name: Notificações Inteligentes
 status: stable
 prd-ref: docs/PRD.md
@@ -14,7 +14,7 @@ created-at: 2026-07-08
 
 ## 1. Escopo Técnico
 
-Esta especificação define o contrato exato do sistema de notificações (in-app) do Cuida Comigo, implementado na Fase 10.1 (Frontend Polling) e Fase 10.2 (Backend Cron).
+Esta especificação define o contrato exato do sistema de notificações (in-app) do Em Círculo, implementado na Fase 10.1 (Frontend Polling) e Fase 10.2 (Backend Cron).
 
 ## 2. Modelagem (Pydantic / SQLModel)
 

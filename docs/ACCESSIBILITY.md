@@ -7,7 +7,7 @@ status: draft
 
 # Diretrizes de Acessibilidade (JINC Protocol)
 
-> "Acessibilidade é inegociável". A plataforma Cuida Comigo deve suportar uma arquitetura de inclusão universal, em conformidade estrita com o WCAG 2.2 AAA.
+> "Acessibilidade é inegociável". A plataforma Em Círculo deve suportar uma arquitetura de inclusão universal, em conformidade estrita com o WCAG 2.2 AAA.
 
 ## 1. Regras de Design e Contraste
 - O Design System deve operar com cores que garantam uma **proporção mínima de contraste de 7:1** (Padrão AAA).

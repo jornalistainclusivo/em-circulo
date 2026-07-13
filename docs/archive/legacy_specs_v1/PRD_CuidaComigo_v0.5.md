@@ -2,7 +2,7 @@
 name: prd_cuida_comigo_v0.5
 description: Requisitos de Produto para a Fase 6 - Círculo de Colaboração e RBAC (v0.5)
 jinc-spec-version: "1.0"
-project-name: "Cuida Comigo"
+project-name: "Em Círculo"
 status: "active"
 version: "v0.5-Collaboration"
 last-updated: "2026-07-07"
@@ -10,7 +10,7 @@ last-updated: "2026-07-07"
 
 # Documento de Requisitos de Produto (PRD) — Fase Colaboração e RBAC (v0.5)
 
-## Cuida Comigo: Colaboração de Cuidado Segura e Centrada no Paciente
+## Em Círculo: Colaboração de Cuidado Segura e Centrada no Paciente
 
 ### 1. Visão Geral e Objetivo
 Até agora, o aplicativo operava em modo *single-player* (apenas um cuidador associado a um grupo e paciente). A Fase v0.5 estabelece a **colaboração multi-player**, permitindo que múltiplos cuidadores colaborem no mesmo círculo de cuidado. Para garantir segurança de dados médicos e operacionais, introduzimos o **Controle de Acesso Baseado em Papéis (RBAC)** e o **Sistema de Convites** baseado em tokens seguros.

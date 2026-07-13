@@ -2,7 +2,7 @@
 name: prd_cuida_comigo_v0.3
 description: Documento de Requisitos de Produto para a fase de Autenticação e Segurança (v0.3)
 jinc-spec-version: "1.0"
-project-name: "Cuida Comigo"
+project-name: "Em Círculo"
 status: "active"
 version: "v0.3-Security"
 last-updated: "2026-06-11"
@@ -10,7 +10,7 @@ last-updated: "2026-06-11"
 
 # Documento de Requisitos de Produto (PRD) - Fase Autenticação (v0.3)
 
-## Cuida Comigo: Ninguém precisa cuidar sozinho
+## Em Círculo: Ninguém precisa cuidar sozinho
 
 ### 1. Visão Geral e Objetivo da Fase
 Após a validação da orquestração de cuidado no MVP (v0.2), o sistema necessita de uma fundação de identidade sólida e segura antes de integrar usuários reais. O objetivo da Fase v0.3 é implementar a **Autenticação Nativa** utilizando JWT (JSON Web Tokens) para isolar o acesso aos Círculos de Cuidado (`CareGroup`).

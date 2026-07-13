@@ -2,10 +2,10 @@
 name: tech_spec_onboarding
 description: Especificação Técnica para a fase de Onboarding (v0.3)
 jinc-spec-version: "1.0.0"
-project-name: Cuida Comigo
+project-name: Em Círculo
 feature-name: Onboarding (Círculo de Cuidado e Paciente)
 status: draft
-prd-ref: specs/PRD_CuidaComigo_v0.4.md
+prd-ref: specs/PRD_EmCirculo_v0.4.md
 coverage: "2/2 FRs mapped"
 created-at: 2026-07-06
 authors: Antigravity / tech-lead

@@ -2,7 +2,7 @@
 name: prd_cuida_comigo_v0.8
 description: Requisitos de Produto para a Fase 10.1 - Notificações Inteligentes e Toasts AAA (v0.8)
 jinc-spec-version: "1.0"
-project-name: "Cuida Comigo"
+project-name: "Em Círculo"
 status: "active"
 version: "v0.8-SmartNotifications"
 last-updated: "2026-07-08"
@@ -10,7 +10,7 @@ last-updated: "2026-07-08"
 
 # Documento de Requisitos de Produto (PRD) — Fase Notificações Inteligentes (v0.8)
 
-## Cuida Comigo: Notificações em Tempo Real
+## Em Círculo: Notificações em Tempo Real
 
 ### 1. Visão Geral e Objetivo
 Para garantir que a comunicação do Círculo de Cuidado flua de forma sincronizada, a Fase 10.1 introduz um sistema de notificações em tempo real. O objetivo é avisar todos os membros do grupo sempre que uma ação crítica for tomada (ex: dose registrada ou tarefa criada/concluída), mantendo todos informados e evitando duplicação de trabalho.

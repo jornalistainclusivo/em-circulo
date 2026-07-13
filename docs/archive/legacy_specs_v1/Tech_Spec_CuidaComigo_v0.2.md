@@ -2,10 +2,10 @@
 name: tech_spec_autenticacao
 description: Especificação Técnica da Autenticação JWT e Segurança (v0.2)
 jinc-spec-version: "1.0.0"
-project-name: Cuida Comigo
+project-name: Em Círculo
 feature-name: Autenticação JWT Native & HttpOnly Cookies
 status: draft
-prd-ref: specs/PRD_CuidaComigo_v0.3.md
+prd-ref: specs/PRD_EmCirculo_v0.3.md
 coverage: "3/3 FRs mapped"
 created-at: 2026-06-11
 authors: Antigravity / tech-lead

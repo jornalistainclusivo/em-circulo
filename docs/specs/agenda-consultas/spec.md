@@ -1,6 +1,6 @@
 ---
 jinc-spec-version: 1.0.0
-project-name: Cuida Comigo
+project-name: Em Círculo
 feature-name: Agenda de Consultas (Appointments)
 status: draft
 prd-ref: docs/PRD.md

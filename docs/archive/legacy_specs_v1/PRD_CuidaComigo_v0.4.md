@@ -2,7 +2,7 @@
 name: prd_cuida_comigo_v0.4
 description: Documento de Requisitos de Produto para a fase de Onboarding (v0.4)
 jinc-spec-version: "1.0"
-project-name: "Cuida Comigo"
+project-name: "Em Círculo"
 status: "active"
 version: "v0.4-Onboarding"
 last-updated: "2026-07-06"
@@ -10,7 +10,7 @@ last-updated: "2026-07-06"
 
 # Documento de Requisitos de Produto (PRD) - Fase Onboarding (v0.4)
 
-## Cuida Comigo: Ninguém precisa cuidar sozinho
+## Em Círculo: Ninguém precisa cuidar sozinho
 
 ### 1. Visão Geral e Objetivo da Fase
 Após estabelecer a camada de segurança e identidade na fase v0.3, a Fase v0.4 foca no **Onboarding do Cuidador**. A primeira interação de um usuário recém-registrado deve permitir que ele configure a estrutura básica de operação:

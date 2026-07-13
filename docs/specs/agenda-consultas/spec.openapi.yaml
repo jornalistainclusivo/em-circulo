@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: Cuida Comigo - Agenda de Consultas API
+  title: Em Círculo - Agenda de Consultas API
   version: "2.0.0"
 paths:
   /api/v1/care-groups/{group_id}/appointments:

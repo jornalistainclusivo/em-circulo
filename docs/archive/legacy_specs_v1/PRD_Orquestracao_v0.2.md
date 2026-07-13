@@ -1,8 +1,8 @@
 ---
 name: prd_orquestracao
-description: Documento de Requisitos de Produto (PRD) do Cuida Comigo
+description: Documento de Requisitos de Produto (PRD) do Em Círculo
 jinc-spec-version: "1.0"
-project-name: "Cuida Comigo"
+project-name: "Em Círculo"
 status: "active"
 version: "v0.2-Alpha"
 last-updated: "2026-06-07"
@@ -10,11 +10,11 @@ last-updated: "2026-06-07"
 
 # Documento de Requisitos de Produto (PRD)
 
-## Cuida Comigo: Ninguém precisa cuidar sozinho
+## Em Círculo: Ninguém precisa cuidar sozinho
 
 ### 1. Visão Geral e North Star
 
-O **Cuida Comigo** é uma plataforma de gestão compartilhada projetada para descentralizar a carga cognitiva e operacional de cuidadores informais. O sistema atua como uma Fonte Única de Verdade (*Single Source of Truth* - SSOT) para o círculo familiar e profissional de apoio, eliminando a fragmentação de informações.
+O **Em Círculo** é uma plataforma de gestão compartilhada projetada para descentralizar a carga cognitiva e operacional de cuidadores informais. O sistema atua como uma Fonte Única de Verdade (*Single Source of Truth* - SSOT) para o círculo familiar e profissional de apoio, eliminando a fragmentação de informações.
 
 * **North Star:** O pivô central de inovação é focar na dor do cuidador como orquestrador, e não no paciente como usuário final.
 

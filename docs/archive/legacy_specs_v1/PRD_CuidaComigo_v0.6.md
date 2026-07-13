@@ -2,7 +2,7 @@
 name: prd_cuida_comigo_v0.6
 description: Requisitos de Produto para a Fase 8 - Enriquecimento de Perfis (v0.6)
 jinc-spec-version: "1.0"
-project-name: "Cuida Comigo"
+project-name: "Em Círculo"
 status: "active"
 version: "v0.6-ProfileEnrichment"
 last-updated: "2026-07-07"
@@ -10,10 +10,10 @@ last-updated: "2026-07-07"
 
 # Documento de Requisitos de Produto (PRD) — Fase Enriquecimento de Perfis (v0.6)
 
-## Cuida Comigo: Perfis Detalhados para Cuidador e Paciente
+## Em Círculo: Perfis Detalhados para Cuidador e Paciente
 
 ### 1. Visão Geral e Objetivo
-Para tornar o Cuida Comigo mais útil clinicamente e operacionalmente no cotidiano, precisamos ir além das informações básicas. Esta fase visa enriquecer o perfil do **Cuidador** (adicionando whatsapp de contato e sua profissão/grau de parentesco) e do **Paciente** (condições médicas pré-existentes e observações gerais do cotidiano), melhorando a colaboração e a prontidão em casos de urgência.
+Para tornar o Em Círculo mais útil clinicamente e operacionalmente no cotidiano, precisamos ir além das informações básicas. Esta fase visa enriquecer o perfil do **Cuidador** (adicionando whatsapp de contato e sua profissão/grau de parentesco) e do **Paciente** (condições médicas pré-existentes e observações gerais do cotidiano), melhorando a colaboração e a prontidão em casos de urgência.
 
 ---
 

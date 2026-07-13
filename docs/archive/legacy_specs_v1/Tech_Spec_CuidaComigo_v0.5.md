@@ -2,10 +2,10 @@
 name: tech_spec_smart_notifications
 description: Especificação Técnica para a Fase 10.1 - Notificações Inteligentes e Toasts AAA (v0.4)
 jinc-spec-version: "1.0.0"
-project-name: Cuida Comigo
+project-name: Em Círculo
 feature-name: Notificações Inteligentes
 status: stable
-prd-ref: specs/PRD_CuidaComigo_v0.8.md
+prd-ref: specs/PRD_EmCirculo_v0.8.md
 coverage: "4/4 FRs mapped"
 created-at: 2026-07-08
 authors: Antigravity / tech-lead
