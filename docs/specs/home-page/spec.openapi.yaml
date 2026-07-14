@@ -1,0 +1,51 @@
+openapi: "3.1.0"
+info:
+  title: Em Círculo — Home Page API Contract
+  version: "1.0.0"
+  description: |
+    A Home Page pública (`/`) é puramente estática (Server Component).
+    **Não existem novas rotas de API** para esta feature.
+    
+    Este documento serve como contrato explícito de ausência de endpoints
+    e mapeia o único redirecionamento de estado relevante: autenticação.
+
+# No paths are defined for the Home Page itself.
+# The Home Page is a static Server Component with no API calls.
+paths: {}
+
+# Authentication state redirect mapping (informational — not an API route)
+x-state-routing:
+  description: |
+    O roteamento de estado da Home Page é gerenciado pelo Next.js Middleware
+    ou pela `page.tsx` antes de renderizar os componentes.
+  flows:
+    unauthenticated:
+      trigger: "Cookie `cc_access_token` ausente ou inválido"
+      action: "Renderiza a Home Page pública (6 componentes estáticos)"
+      destination: "/"
+    authenticated:
+      trigger: "Cookie `cc_access_token` presente e válido"
+      action: "redirect()"
+      destination: "/dashboard (ou rota de painel interno ativa)"
+  
+  cta_routing:
+    primary_cta:
+      label: "Criar meu Círculo"
+      href: "/login"
+      intent: "Inicia fluxo de cadastro/login para novo usuário"
+    secondary_cta:
+      label: "Conheça a plataforma"
+      href: "#como-funciona"
+      intent: "Rolagem âncora para HowItWorksSection (client-side)"
+
+# Existing auth endpoints (unchanged, documented for reference)
+x-related-endpoints:
+  - path: "/api/v1/auth/register"
+    method: POST
+    description: "Registro de novo usuário — destino final do fluxo CTA"
+  - path: "/api/v1/auth/login"
+    method: POST
+    description: "Login — rota de autenticação existente"
+  - path: "/api/v1/auth/me"
+    method: GET
+    description: "Perfil do usuário autenticado — usado no middleware de rota"
