@@ -4,7 +4,7 @@ description: Documento Unificado de Requisitos de Produto (v2.0 Draft)
 jinc-spec-version: "1.0.0"
 project-name: Em Círculo
 status: draft
-last-updated: 2026-07-09
+last-updated: 2026-07-14
 ---
 
 # Documento de Requisitos de Produto (PRD) — Em Círculo
@@ -21,6 +21,30 @@ Não somos um aplicativo de tarefas. Somos um ambiente de confiança, oferecendo
 1. **O Cuidador Principal:** Continua no centro das decisões, mas não precisa carregar todas as responsabilidades sozinho.
 2. **Familiares e Pessoas de Apoio:** Desejam contribuir de forma organizada, mesmo participando ocasionalmente, ajudando a família a cuidar junta.
 3. **Cuidadores Profissionais:** Trabalham em conjunto com a família, utilizando informações organizadas, atualizadas e seguras.
+
+---
+
+## 2.1. Estratégia de Aquisição (PLG — Product-Led Growth)
+
+A Home Page da plataforma é o principal vetor de aquisição. Ela não vende funcionalidades. Ela vende uma **transformação**: do caos logístico e emocional para a tranquilidade centralizada.
+
+### Modelo de Freemium
+
+| Plano | Público | Inclusões |
+|---|---|---|
+| **Gratuito** | Famílias iniciando sua rede de apoio | 1 Círculo, até 5 participantes, tarefas, medicamentos, histórico, notificações |
+| **Em Círculo Plus** | Famílias com necessidades mais complexas | Múltiplos Círculos, agenda, arquivos, IA, relatórios |
+| **Em Círculo Pro** | Cuidadores profissionais e instituições | Múltiplos pacientes, gestão de turnos, exportação de dados, equipes |
+
+### Jornada de Conversão (Home → First Circle)
+
+A Home deve conduzir o visitante, nesta ordem:
+1. **Identificação do problema** — "Quando tudo depende de uma pessoa, o cuidado fica mais difícil."
+2. **Validação emocional** — "Você não está sozinho."
+3. **Proposta de transformação** — "Um Círculo organiza tudo."
+4. **CTA de baixa fricção** — Cadastro direto para criar o primeiro Círculo (`/login`).
+
+> Os planos pagos devem possuir página própria. A Home não apresenta preços; demonstra valor primeiro.
 
 ---
 

@@ -4,7 +4,7 @@ description: Software Design Document (v2.0 Draft)
 jinc-spec-version: "1.0.0"
 project-name: Em Círculo
 status: active
-last-updated: 2026-07-11
+last-updated: 2026-07-14
 prd-ref: docs/PRD.md
 ---
 
@@ -84,3 +84,47 @@ Como regra arquitetural de Zero-Trust, **todo** endpoint da agenda (GET, POST, P
 
 ### 4.5. Estratégia de Armazenamento de Arquivos Clínicos (Storage)
 Adota-se um padrão 'S3-compatible' (AWS S3 para produção, MinIO para ambiente local/dev). O banco PostgreSQL armazenará apenas a URI do arquivo, nunca o binário (BLOB). Como premissa de Segurança Zero-Trust, os URLs gerados para download ou visualização deverão ser pré-assinados (Presigned URLs) com tempo de expiração curto, exigindo validação RBAC estrita de 'CareGroupMember' antes da geração do link.
+
+---
+
+## 5. Topologia do Frontend — Home Page Modular
+
+### 5.1. Roteamento e Responsabilidade da `page.tsx`
+
+A rota `/` é dividida em dois cenários:
+- **Usuário autenticado** (possui cookie `cc_access_token`): redirecionado para o painel interno (`/dashboard` ou rota existente com grupos de cuidado).
+- **Usuário não autenticado**: renderiza a Home Page pública, composta pelos 6 componentes de apresentação modulares abaixo.
+
+A Home Page é uma página **puramente estática** (Server Component, `cache: 'force-cache'`). Nenhuma chamada de API é realizada nesta rota.
+
+### 5.2. Hierarquia de Componentes (`src/components/home/`)
+
+```
+app/page.tsx
+└── <main id="main-content">
+    ├── <HeroSection>           — Título principal, subtexto e CTAs (/login)
+    ├── <ProblemSection>        — 3 cards de dor: Sobrecarga, Informações espalhadas, Insegurança
+    ├── <SolutionSection>       — 4 cards de solução: Tarefas, Medicamentos, Histórico, Convites
+    ├── <HowItWorksSection>     — 3 passos sequenciais: Criar, Convidar, Compartilhar
+    ├── <AccessibilitySection>  — Compromisso WCAG 2.2 e inclusão
+    └── <FinalCtaSection>       — Chamada final de conversão com CTA duplicado
+```
+
+### 5.3. Padrão de Isolamento (CSS Modules)
+
+Cada componente é pareado com seu próprio arquivo `.module.css`, garantindo:
+- **Escopo de estilos**: sem vazação de classes entre componentes.
+- **Coesidade**: o componente carrega seus estilos via `import styles from './NomeComponente.module.css'`.
+- **Zero conflito global**: a única folha de estilos global é `globals.css` (tokens de design, reset, tipografia).
+
+### 5.4. CTAs e Roteamento
+
+Todos os botões de conversão da Home apontam para `/login`, que serve tanto o fluxo de login quanto o de cadastro. Não há rotas de API novas para esta página.
+
+### 5.5. Acessibilidade (WCAG 2.2 AAA — Obrigatório)
+
+- `<main id="main-content">` como ponto de ancora do `<SkipLink>` já existente.
+- Todos os botões com `aria-label` descritivo.
+- Contraste mínimo de 7:1 (palette neutral do JINC).
+- `focus-visible` em todos os elementos interativos.
+- Resposta a `prefers-reduced-motion` em todas as animações CSS.
