@@ -1,0 +1,83 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: em-circulo-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-orquestracao}
+    volumes:
+      - em-circulo-db-data:/var/lib/postgresql/data
+    networks:
+      - em-circulo-network
+
+  minio:
+    image: minio/minio
+    container_name: em-circulo-minio
+    restart: always
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9001"
+    volumes:
+      - em-circulo-s3-data:/data
+    networks:
+      - em-circulo-network
+
+  minio-setup:
+    image: minio/mc
+    container_name: em-circulo-minio-setup
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      sleep 5;
+      mc alias set local http://minio:9000 minioadmin minioadmin;
+      mc mb local/emcirculo-docs || true;
+      mc anonymous set public local/emcirculo-docs || true;
+      exit 0;
+      "
+    networks:
+      - em-circulo-network
+
+  backend:
+    build:
+      context: ./python_service
+      dockerfile: Dockerfile
+    container_name: em-circulo-backend
+    restart: always
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-orquestracao}
+      - S3_ENDPOINT=http://minio:9000
+      - S3_BUCKET_NAME=emcirculo-docs
+    depends_on:
+      - db
+      - minio
+    ports:
+      - "8000:8000"
+    networks:
+      - em-circulo-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: em-circulo-frontend
+    restart: always
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+    networks:
+      - em-circulo-network
+
+networks:
+  em-circulo-network:
+    driver: bridge
+
+volumes:
+  em-circulo-db-data:
+  em-circulo-s3-data:
