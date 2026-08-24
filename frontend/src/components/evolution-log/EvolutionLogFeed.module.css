@@ -1,0 +1,183 @@
+/* ── Evolution Log Feed ─────────────────────────────────────────── */
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.feedHeader {
+  margin: 0 0 var(--space-4) 0;
+  padding-bottom: var(--space-4);
+  border-bottom: 2px solid var(--color-primary);
+}
+
+/* ── Empty State ───────────────────────────────────────────────── */
+.emptyCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-12) var(--space-8);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}
+
+.emptyIcon {
+  font-size: 3.5rem;
+  margin-bottom: var(--space-4);
+  color: var(--color-accent);
+}
+
+.emptyTitle {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+
+.emptyText {
+  color: var(--color-text-secondary);
+  max-width: 480px;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+}
+
+/* ── Log Card ──────────────────────────────────────────────────── */
+.logList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.logCard {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+.logCard:hover {
+  box-shadow: var(--shadow-md);
+  border-left-color: var(--color-accent);
+}
+
+.logCard:focus-within {
+  box-shadow: var(--shadow-md);
+  outline: var(--focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+/* ── Log Header ────────────────────────────────────────────────── */
+.logHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.logDate {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* ── Badges ────────────────────────────────────────────────────── */
+.badges {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.badgeMood,
+.badgeDiet {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: var(--radius-sm);
+}
+
+/* Mood Variants */
+.moodBom {
+  background-color: var(--color-success-light);
+  color: var(--color-success);
+}
+
+.moodRegular {
+  background-color: var(--color-accent-light);
+  color: var(--color-accent);
+}
+
+.moodRuim {
+  background-color: var(--color-danger-light);
+  color: var(--color-danger);
+}
+
+.moodMuito {
+  background-color: var(--color-danger-light);
+  color: var(--color-danger);
+}
+
+/* Diet Variants */
+.dietBem {
+  background-color: var(--color-success-light);
+  color: var(--color-success);
+}
+
+.dietPouco {
+  background-color: var(--color-accent-light);
+  color: var(--color-accent);
+}
+
+.dietRecusou {
+  background-color: var(--color-danger-light);
+  color: var(--color-danger);
+}
+
+/* ── Log Body ──────────────────────────────────────────────────── */
+.logTitle {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-2);
+}
+
+.logSummary {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+  white-space: pre-wrap;
+}
+
+/* ── Wellbeing Notes ───────────────────────────────────────────── */
+.wellbeingSection {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-surface-sunken);
+}
+
+.wellbeingTitle {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.wellbeingText {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  white-space: pre-wrap;
+  line-height: var(--line-height-relaxed);
+}

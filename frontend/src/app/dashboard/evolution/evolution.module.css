@@ -1,0 +1,43 @@
+/* ── Evolution Log Page ─────────────────────────────────────────── */
+.page {
+  max-width: 48rem; /* 768px — same as dashboard */
+  margin-inline: auto;
+  padding: var(--space-8) var(--space-4);
+}
+
+.pageHeader {
+  margin-bottom: var(--space-8);
+}
+
+.pageHeader h1 {
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+}
+
+.pageHeader p {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+}
+
+/* ── New Entry Section ─────────────────────────────────────────── */
+.newEntrySection {
+  margin-bottom: var(--space-12);
+}
+
+.newEntrySection h2 {
+  margin: 0 0 var(--space-6) 0;
+  padding-bottom: var(--space-4);
+  border-bottom: 2px solid var(--color-primary);
+}
+
+/* ── Feed Section ──────────────────────────────────────────────── */
+.feedSection {
+  margin-top: var(--space-8);
+}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media (min-width: 640px) {
+  .page {
+    padding: var(--space-12) var(--space-6);
+  }
+}
