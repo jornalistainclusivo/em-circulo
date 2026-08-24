@@ -57,6 +57,7 @@ O núcleo do sistema orbita ao redor do `CareGroup` (Círculo de Cuidado).
 - `Notification`: Tabela de Event-Sourcing leve consumida periodicamente pelo frontend (Polling).
 - `Appointment`: Entidade para a Agenda de Consultas, atrelada por foreign key ao `CareRecipient`. Campos core da modelagem: `title` (título), `scheduled_at` (data/hora UTC), `provider_name` (especialista/médico) e `location` (local).
 - `ClinicalDocument`: Entidade para o Arquivo de Documentos Clínicos, atrelada ao `CareRecipient`. Contém metadados como título, tipo de documento (receita, laudo, exame) e data de upload.
+- `WeeklyReport`: Entidade para o Diário de Evolução Compartilhado, atrelada ao `CareRecipient` e criada por um cuidador. Usada para registrar e comunicar periodicamente o humor, alimentação e bem-estar do paciente.
 
 ---
 

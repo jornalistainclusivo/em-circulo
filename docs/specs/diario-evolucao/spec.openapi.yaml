@@ -1,0 +1,114 @@
+openapi: 3.1.0
+info:
+  title: API Em Círculo - Diário de Evolução (Weekly Reports)
+  version: 2.0.0
+paths:
+  /api/v1/care-groups/{group_id}/recipients/{recipient_id}/weekly-reports:
+    post:
+      summary: Cria um novo registro no diário de evolução
+      operationId: createWeeklyReport
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: recipient_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WeeklyReportCreate'
+      responses:
+        '201':
+          description: Registro criado com sucesso. Retorna o registro e cria a notificação.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WeeklyReport'
+    get:
+      summary: Lista registros do diário de evolução do paciente
+      operationId: listWeeklyReports
+      parameters:
+        - name: group_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: recipient_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: skip
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: Lista de registros
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WeeklyReport'
+
+components:
+  schemas:
+    WeeklyReportCreate:
+      type: object
+      required:
+        - report_date
+      properties:
+        report_date:
+          type: string
+          format: date-time
+        summary_text:
+          type: string
+        mood:
+          type: string
+        diet:
+          type: string
+        wellbeing_notes:
+          type: string
+    WeeklyReport:
+      allOf:
+        - $ref: '#/components/schemas/WeeklyReportCreate'
+        - type: object
+          required:
+            - id
+            - care_recipient_id
+            - author_id
+            - created_at
+          properties:
+            id:
+              type: string
+              format: uuid
+            care_recipient_id:
+              type: string
+              format: uuid
+            author_id:
+              type: string
+              format: uuid
+            pdf_url:
+              type: string
+              nullable: true
+            created_at:
+              type: string
+              format: date-time
