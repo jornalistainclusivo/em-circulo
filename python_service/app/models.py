@@ -52,6 +52,7 @@ class NotificationType(str, Enum):
     TASK_COMPLETED = "TASK_COMPLETED"
     STOCK_ALERT = "STOCK_ALERT"
     DOSE_ATRASADA = "DOSE_ATRASADA"
+    REPORT_ADDED = "REPORT_ADDED"
 
 
 # ---------------------------------------------------------------------------
@@ -102,6 +103,7 @@ class CareRecipient(SQLModel, table=True):
     protocols: List["MedicationProtocol"] = Relationship(back_populates="care_recipient")
     appointments: List["Appointment"] = Relationship(back_populates="care_recipient")
     documents: List["ClinicalDocument"] = Relationship(back_populates="care_recipient")
+    weekly_reports: List["WeeklyReport"] = Relationship(back_populates="care_recipient")
 
 class Task(SQLModel, table=True):
     __tablename__ = "tasks"
@@ -208,3 +210,23 @@ class ClinicalDocument(SQLModel, table=True):
     uploaded_at: datetime = Field(sa_column=Column(DateTime(timezone=True), default=utc_now))
 
     care_recipient: CareRecipient = Relationship(back_populates="documents")
+
+# ---------------------------------------------------------------------------
+# Diário de Evolução Compartilhado (WeeklyReport) — Fase v2.2
+# ---------------------------------------------------------------------------
+
+class WeeklyReport(SQLModel, table=True):
+    __tablename__ = "weekly_reports"
+
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    care_recipient_id: uuid.UUID = Field(foreign_key="care_recipients.id", index=True)
+    author_id: uuid.UUID = Field(foreign_key="care_group_members.id")
+    report_date: datetime = Field(sa_column=Column(DateTime(timezone=True), index=True))
+    summary_text: Optional[str] = None
+    mood: Optional[str] = Field(default=None, max_length=50)
+    diet: Optional[str] = Field(default=None, max_length=50)
+    wellbeing_notes: Optional[str] = None
+    pdf_url: Optional[str] = Field(default=None, max_length=1024)
+    created_at: datetime = Field(sa_column=Column(DateTime(timezone=True), default=utc_now))
+
+    care_recipient: CareRecipient = Relationship(back_populates="weekly_reports")

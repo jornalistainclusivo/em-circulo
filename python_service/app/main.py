@@ -3,7 +3,7 @@ load_dotenv()
 
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from app.routers import care_groups, tasks, protocols, care_recipients, invites, users, notifications, appointments, documents
+from app.routers import care_groups, tasks, protocols, care_recipients, invites, users, notifications, appointments, documents, weekly_reports
 from app.auth import router as auth_router
 from app.scheduler import scheduler
 
@@ -29,6 +29,7 @@ app.include_router(users.router)
 app.include_router(notifications.router)
 app.include_router(appointments.router)
 app.include_router(documents.router)
+app.include_router(weekly_reports.router)
 app.include_router(auth_router.router)
 
 @app.get("/health")

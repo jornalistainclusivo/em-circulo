@@ -269,3 +269,27 @@ class DocumentResponse(BaseModel):
 class PresignedUrlResponse(BaseModel):
     url: str
     expires_in: int
+
+# ---------------------------------------------------------------------------
+# Diário de Evolução Compartilhado (WeeklyReport) — Fase v2.2
+# ---------------------------------------------------------------------------
+
+class WeeklyReportCreate(BaseModel):
+    report_date: datetime
+    summary_text: Optional[str] = None
+    mood: Optional[str] = None
+    diet: Optional[str] = None
+    wellbeing_notes: Optional[str] = None
+
+class WeeklyReportResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+    id: uuid.UUID
+    care_recipient_id: uuid.UUID
+    author_id: uuid.UUID
+    report_date: datetime
+    summary_text: Optional[str] = None
+    mood: Optional[str] = None
+    diet: Optional[str] = None
+    wellbeing_notes: Optional[str] = None
+    pdf_url: Optional[str] = None
+    created_at: datetime
