@@ -2,6 +2,13 @@
 name: spec-diario-evolucao
 description: Especificação técnica para o Diário de Evolução / Relatórios Semanais (WeeklyReport).
 jinc-spec-version: "1.0.0"
+project-name: Em Círculo
+feature: Diário de Evolução (WeeklyReport)
+status: approved
+version: 1.0.0
+last-updated: 2026-08-24
+sdd-ref: docs/SDD.md#5-topologia-do-frontend--diário-de-evolução
+prd-ref: docs/PRD.md#42-diário-de-evolução-compartilhado
 ---
 
 # Diário de Evolução (WeeklyReport)
