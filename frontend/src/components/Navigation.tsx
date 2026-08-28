@@ -59,6 +59,13 @@ export function Navigation({ isLoggedIn = false }: NavigationProps) {
               Agenda
             </Link>
             <Link
+              href="/dashboard/evolution"
+              className={styles.navLink}
+              aria-current={pathname === "/dashboard/evolution" ? "page" : undefined}
+            >
+              Evolução
+            </Link>
+            <Link
               href="/perfil"
               className={styles.navLink}
               aria-current={pathname === "/perfil" ? "page" : undefined}
