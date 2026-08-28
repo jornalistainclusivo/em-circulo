@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 import uuid
 from typing import List
+from datetime import datetime, timezone
 
 from app.database import get_session
 from app.models import WeeklyReport, CareGroupMember, User, CareRecipient, Notification, NotificationType
@@ -38,10 +39,15 @@ async def create_weekly_report(
     if not recipient:
         raise HTTPException(status_code=404, detail="Paciente não encontrado para o grupo especificado.")
 
+    # Assegura que o report_date seja naive UTC para não dar crash no asyncpg
+    safe_report_date = payload.report_date
+    if safe_report_date.tzinfo is not None:
+        safe_report_date = safe_report_date.astimezone(timezone.utc).replace(tzinfo=None)
+
     report = WeeklyReport(
         care_recipient_id=recipient.id,
         author_id=member.id,
-        report_date=payload.report_date,
+        report_date=safe_report_date,
         summary_text=payload.summary_text,
         mood=payload.mood,
         diet=payload.diet,
