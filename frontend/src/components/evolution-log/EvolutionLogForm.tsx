@@ -41,6 +41,7 @@ export default function EvolutionLogForm({ groupId, recipientId, token, onSucces
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
+          report_date: new Date().toISOString(),
           summary_text: summary,
           mood: mood || undefined,
           diet: diet || undefined,
@@ -50,7 +51,12 @@ export default function EvolutionLogForm({ groupId, recipientId, token, onSucces
 
       if (!res.ok) {
         const data = await res.json()
-        throw new Error(data.detail || 'Falha ao salvar o diário.')
+        const msg = typeof data.detail === 'string'
+          ? data.detail
+          : Array.isArray(data.detail)
+            ? data.detail.map((e: any) => e.msg).join('; ')
+            : 'Falha ao salvar o diário.'
+        throw new Error(msg)
       }
 
       setSummary('')
